@@ -17,7 +17,7 @@ import { register } from "../../actions/login-action";
 
 const theme = createTheme();
 
-export default function Register() {
+export default function CreateMaterial() {
   const history = useNavigate();
 
   const handleSubmit = (event) => {
@@ -25,12 +25,10 @@ export default function Register() {
     const data = new FormData(event.currentTarget);
     const registertData = {
       name: data.get("name"),
-      email: data.get("email"),
-      password: data.get("password"),
-      documentNumber: data.get("documentNumber"),
-      address: data.get("address"),
-      DocumentType: data.get("DocumentType"),
-      cellPhone: data.get("cellPhone"),
+      description: data.get("description"),
+      reference: data.get("reference"),
+      category: data.get("category"),
+      brand: data.get("brand"),
     };
     register(registertData).then(
       (response) => {
@@ -59,7 +57,7 @@ export default function Register() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Registro
+            Creacion de materiales
           </Typography>
           <Box
             component="form"
@@ -75,17 +73,17 @@ export default function Register() {
                   id="name"
                   label="Nombre"
                   name="name"
-                  autoComplete="family-name"
+                  //autoComplete="family-name"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="email"
-                  label="Correo electronico"
-                  name="email"
-                  autoComplete="email"
+                  id="description"
+                  label="Descripcion"
+                  name="description"
+                  //autoComplete="email"
                 />
               </Grid>
 
@@ -93,39 +91,29 @@ export default function Register() {
                 <TextField
                   required
                   fullWidth
-                  name="password"
-                  label="Contraseña"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
+                  name="reference"
+                  label="Referencia"
+                  id="reference"
+                  //autoComplete="new-password"
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
-                  name="documentType"
+                  name="category"
                   required
                   fullWidth
-                  id="documentType"
-                  label="Tipo de documento"
+                  id="category"
+                  label="Categoria"
                   autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="documentNumber"
-                  label="Numero de documento"
-                  name="documentNumber"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="address"
-                  label="Ciudad Residencia"
-                  name="address"
+                  id="brand"
+                  label="Marca"
+                  name="brand"
                 />
               </Grid>
             </Grid>
@@ -135,7 +123,7 @@ export default function Register() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Registrarse
+              Crear Vehiculo
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>

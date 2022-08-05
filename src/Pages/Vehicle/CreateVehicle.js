@@ -17,20 +17,20 @@ import { register } from "../../actions/login-action";
 
 const theme = createTheme();
 
-export default function Register() {
+export default function CreateVehicle() {
   const history = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const registertData = {
-      name: data.get("name"),
-      email: data.get("email"),
-      password: data.get("password"),
-      documentNumber: data.get("documentNumber"),
-      address: data.get("address"),
-      DocumentType: data.get("DocumentType"),
-      cellPhone: data.get("cellPhone"),
+      plate: data.get("plate"),
+      brand: data.get("brand"),
+      model: data.get("model"),
+      serialChasis: data.get("serialChasis"),
+      serialEngine: data.get("serialEngine"),
+      serialMotor: data.get("serialMotor"),
+      color: data.get("color"),
     };
     register(registertData).then(
       (response) => {
@@ -59,7 +59,7 @@ export default function Register() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Registro
+            Creacion de vehiculos
           </Typography>
           <Box
             component="form"
@@ -68,64 +68,63 @@ export default function Register() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
-                  id="name"
-                  label="Nombre"
-                  name="name"
-                  autoComplete="family-name"
+                  id="plate"
+                  label="Placa"
+                  name="plate"
+                  //autoComplete="family-name"
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
-                  id="email"
-                  label="Correo electronico"
-                  name="email"
-                  autoComplete="email"
+                  id="brand"
+                  label="Marca"
+                  name="brand"
+                  //autoComplete="email"
                 />
               </Grid>
 
-              <Grid item xs={12}>
+              <Grid item xs={12} sm={6}>
                 <TextField
                   required
                   fullWidth
-                  name="password"
-                  label="Contraseña"
-                  type="password"
-                  id="password"
-                  autoComplete="new-password"
+                  name="model"
+                  label="Modelo"
+                  id="modelo"
+                  //autoComplete="new-password"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
-                  name="documentType"
+                  name="color"
                   required
                   fullWidth
-                  id="documentType"
-                  label="Tipo de documento"
+                  id="color"
+                  label="Color"
                   autoFocus
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
+              <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="documentNumber"
-                  label="Numero de documento"
-                  name="documentNumber"
+                  id="serialChasis"
+                  label="Numero de chasis"
+                  name="serialChasis"
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
-                  id="address"
-                  label="Ciudad Residencia"
-                  name="address"
+                  id="serialEngine"
+                  label="Serial de motor"
+                  name="serialEngine"
                 />
               </Grid>
             </Grid>
@@ -135,7 +134,7 @@ export default function Register() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Registrarse
+              Crear Vehiculo
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
