@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import AppContainer from "../../Components/Container/appContainer";
-import Footer from "../../Components/Footer/footer";
-import { getAllUsers } from "../../actions/user-action";
+import React, { useEffect, useState } from 'react';
+import AppContainer from '../../Components/Container/appContainer';
+import Footer from '../../Components/Footer/footer';
+import { getAllUsers } from '../../actions/user-action';
 
 function Dashboard() {
   const [users, setUsers] = useState([]);

@@ -12,11 +12,18 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 import xs from '../../Images/Logo.png';
+import { login } from '../../actions/login-action';
 
 function Copyright() {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" sx={{ mt: 5 }}>
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      sx={{ mt: 5 }}
+    >
       {'Copyright © '}
       <Link color="inherit" href="https://lubriserviciosdelnorte.com/">
         Lubriservicios del Norte SAS
@@ -30,14 +37,35 @@ function Copyright() {
 
 const theme = createTheme();
 
-export default function Login() {
+export default function SignIn() {
+  const history = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
+    const user = {
       email: data.get('email'),
       password: data.get('password'),
-    });
+    };
+    login(user).then(
+      (response) => {
+        if (response.status === 200 || response.code === 200) {
+          window.localStorage.setItem(
+            'token_app',
+            response.data != null && response.data.token,
+          );
+
+          const temporaly = JSON.parse(localStorage.getItem('state'));
+          const body = {
+            token: temporaly?.token?.token,
+            email: temporaly?.userInfo?.email,
+          };
+          history('/register');
+        } else {
+        }
+      },
+      (error) => {},
+    );
   };
 
   return (
@@ -52,7 +80,9 @@ export default function Login() {
           sx={{
             backgroundImage: `url(${xs})`,
             backgroundRepeat: 'no-repeat',
-            backgroundColor: (t) => (t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900]),
+            backgroundColor: (t) => (t.palette.mode === 'light'
+              ? t.palette.grey[50]
+              : t.palette.grey[900]),
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -73,7 +103,12 @@ export default function Login() {
             <Typography component="h1" variant="h5">
               Ingreso
             </Typography>
-            <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit}
+              sx={{ mt: 1 }}
+            >
               <TextField
                 margin="normal"
                 required

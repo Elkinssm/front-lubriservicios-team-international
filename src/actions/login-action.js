@@ -5,7 +5,11 @@ export const login = (loginData) => new Promise((resolve, reject) => {
     'Content-Type': 'application/json',
   };
   axios
-    .post('http://localhost:3000/api/lubrisernorte/v1/users/', loginData, headers)
+    .post(
+      'http://localhost:3000/api/lubrisernorte/v1/auth/login',
+      loginData,
+      headers,
+    )
     .then((response) => {
       resolve(response);
     })
@@ -19,7 +23,11 @@ export const register = (registertData) => new Promise((resolve, reject) => {
     'Content-Type': 'application/json',
   };
   axios
-    .post('http://localhost:3000/api/lubrisernorte/v1/users/', registertData, headers)
+    .post(
+      'http://localhost:3000/api/lubrisernorte/v1/users/',
+      registertData,
+      headers,
+    )
     .then((response) => {
       resolve(response);
     })
