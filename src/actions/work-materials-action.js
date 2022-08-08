@@ -1,11 +1,11 @@
 import HttpClient from './HttpClient';
 
-export const registerMaterial = (patientData) => new Promise((resolve, reject) => {
+export const registerWorkMaterials = (patientData) => new Promise((resolve, reject) => {
   const headers = {
     'Content-Type': 'application/json',
   };
   HttpClient.post(
-    'http://localhost:3000/api/lubrisernorte/v1/materials/',
+    'http://localhost:3000/api/lubrisernorte/v1/work-materials/',
     patientData,
     headers,
   )
@@ -17,12 +17,12 @@ export const registerMaterial = (patientData) => new Promise((resolve, reject) =
     });
 });
 
-export const getAllMaterials = () => new Promise((resolve, reject) => {
+export const getAllWorkMaterials = () => new Promise((resolve, reject) => {
   const headers = {
     'Content-Type': 'application/json',
   };
   HttpClient.get(
-    'http://localhost:3000/api/lubrisernorte/v1/materials/',
+    'http://localhost:3000/api/lubrisernorte/v1/work-materials/',
     headers,
   )
     .then((response) => {
@@ -34,12 +34,12 @@ export const getAllMaterials = () => new Promise((resolve, reject) => {
     });
 });
 
-export const getMaterialById = (id) => new Promise((resolve, reject) => {
+export const getWorkMaterialId = (id) => new Promise((resolve, reject) => {
   const headers = {
     'Content-Type': 'application/json',
   };
   HttpClient.get(
-    `http://localhost:3000/api/lubrisernorte/v1/materials/${id}`,
+    `http://localhost:3000/api/lubrisernorte/v1/work-materials/${id}`,
 
     headers,
   )
@@ -55,12 +55,12 @@ export const getMaterialById = (id) => new Promise((resolve, reject) => {
     });
 });
 
-export const deleteMaterials = (id) => new Promise((resolve, reject) => {
+export const deleteWorkMaterials = (id) => new Promise((resolve, reject) => {
   const headers = {
     'Content-Type': 'application/json',
   };
   HttpClient.delete(
-    `http://localhost:3000/api/lubrisernorte/v1/materials/${id}`,
+    `http://localhost:3000/api/lubrisernorte/v1/work-materials/${id}`,
     headers,
   )
     .then((response) => {
@@ -71,12 +71,12 @@ export const deleteMaterials = (id) => new Promise((resolve, reject) => {
     });
 });
 
-export const updateMaterials = (id, body) => new Promise((resolve, reject) => {
+export const updateWorkMaterials = (id, body) => new Promise((resolve, reject) => {
   const headers = {
     'Content-Type': 'application/json',
   };
   HttpClient.put(
-    `http://localhost:3000/api/lubrisernorte/v1/materials/${id}`,
+    `http://localhost:3000/api/lubrisernorte/v1/work-materials/${id}`,
     body,
     headers``,
   )

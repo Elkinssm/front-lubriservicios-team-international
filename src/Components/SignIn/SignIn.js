@@ -3,8 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
@@ -13,6 +11,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import { Checkbox, FormControlLabel } from '@mui/material';
 import xs from '../../Images/Logo.png';
 import { login } from '../../actions/login-action';
 
@@ -60,11 +59,11 @@ export default function SignIn() {
             token: temporaly?.token?.token,
             email: temporaly?.userInfo?.email,
           };
-          history('/register');
+          history('/dashboard');
         } else {
         }
       },
-      (error) => {},
+      (error) => { },
     );
   };
 
@@ -141,7 +140,13 @@ export default function SignIn() {
               >
                 Ingresar
               </Button>
-
+              <Grid container justifyContent="flex-end">
+                <Grid item>
+                  <Link href="/register" variant="body2">
+                    ¿No tienes una cuenta? Registrate
+                  </Link>
+                </Grid>
+              </Grid>
               <Copyright />
             </Box>
           </Box>

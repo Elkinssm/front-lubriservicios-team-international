@@ -5,7 +5,7 @@ export const registerOrderWorkTypes = (patientData) => new Promise((resolve, rej
     'Content-Type': 'application/json',
   };
   HttpClient.post(
-    '"http://localhost:3000/api/lubrisernorte/v1/order-work-types/',
+    'http://localhost:3000/api/lubrisernorte/v1/order-work-types/',
     patientData,
     headers,
   )

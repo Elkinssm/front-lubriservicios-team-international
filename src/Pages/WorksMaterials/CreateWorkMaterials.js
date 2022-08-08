@@ -1,10 +1,8 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -13,21 +11,43 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-
+import { registerWorkMaterials } from '../../actions/work-materials-action';
+import { getAllWorkTypes } from '../../actions/work-type-action';
+import { getAllMaterials } from '../../actions/material-action';
 
 const theme = createTheme();
 
-export default function CreateWorkType() {
+export default function CreateWorkMaterials() {
+  const [workTypes, setWorkTypes] = useState([]);
+  const [materials, setMaterials] = useState([]);
+
+  useEffect(() => {
+    const allWorkTypes = async () => {
+      const response = await getAllWorkTypes();
+      setWorkTypes(response.data);
+    };
+    allWorkTypes();
+  }, []);
+
+  useEffect(() => {
+    const allMaterials = async () => {
+      const response = await getAllMaterials();
+      setMaterials(response.data);
+    };
+    allMaterials();
+  }, []);
+
   const history = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const registertData = {
-      name: data.get('name'),
-      description: data.get('description'),
+      quantity: data.get('quantity'),
+      materialId: 1, // data.get('materialId'),
+      workTypeId: 1, // data.get('workTypeId'),
     };
-    register(registertData).then(
+    registerWorkMaterials(registertData).then(
       (response) => {
         if (response.status === 201 || response.code === 201) {
           history('/');
@@ -54,7 +74,7 @@ export default function CreateWorkType() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Tipo de trabajo
+            Materiales de trabajo
           </Typography>
           <Box
             component="form"
@@ -67,9 +87,9 @@ export default function CreateWorkType() {
                 <TextField
                   required
                   fullWidth
-                  id="name"
-                  label="Nombre"
-                  name="name"
+                  id="quantity"
+                  label="Cantidad"
+                  name="quantity"
                   // autoComplete="family-name"
                 />
               </Grid>
@@ -77,9 +97,19 @@ export default function CreateWorkType() {
                 <TextField
                   required
                   fullWidth
-                  id="description"
-                  label="Descripcion"
-                  name="description"
+                  id="materialId"
+                  label="Material"
+                  name="materialId"
+                  // autoComplete="email"
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="workTypeId"
+                  label="Tipo de traajo"
+                  name="workTypeId"
                   // autoComplete="email"
                 />
               </Grid>
@@ -90,7 +120,7 @@ export default function CreateWorkType() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Crear Trabajo
+              Crear material de trabajo
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>

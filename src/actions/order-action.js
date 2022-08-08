@@ -5,7 +5,7 @@ export const registerOrder = (patientData) => new Promise((resolve, reject) => {
     'Content-Type': 'application/json',
   };
   HttpClient.post(
-    '"http://localhost:3000/api/lubrisernorte/v1/orders/',
+    'http://localhost:3000/api/lubrisernorte/v1/orders/',
     patientData,
     headers,
   )

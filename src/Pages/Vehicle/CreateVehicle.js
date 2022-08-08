@@ -1,45 +1,56 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { useNavigate } from "react-router-dom";
-import { register } from "../../actions/login-action";
+import React, { useEffect, useState } from 'react';
+import Avatar from '@mui/material/Avatar';
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Link from '@mui/material/Link';
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import { getAllUsers } from '../../actions/user-action';
+import { registerVehicle } from '../../actions/vehicle-action';
 
 const theme = createTheme();
 
 export default function CreateVehicle() {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    const allUsers = async () => {
+      const response = await getAllUsers();
+      setUsers(response.data);
+    };
+    allUsers();
+  }, []);
+
   const history = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const registertData = {
-      plate: data.get("plate"),
-      brand: data.get("brand"),
-      model: data.get("model"),
-      serialChasis: data.get("serialChasis"),
-      serialEngine: data.get("serialEngine"),
-      serialMotor: data.get("serialMotor"),
-      color: data.get("color"),
+      plate: data.get('plate'),
+      brand: data.get('brand'),
+      model: data.get('model'),
+      serialChasis: data.get('serialChasis'),
+      serialEngine: data.get('serialEngine'),
+      color: data.get('color'),
+      userId: 3,
     };
-    register(registertData).then(
+    registerVehicle(registertData).then(
       (response) => {
         if (response.status === 201 || response.code === 201) {
-          history("/");
+          history('/');
         } else {
         }
       },
-      (error) => {}
+      (error) => {
+        console.log(error);
+      },
     );
   };
 
@@ -50,12 +61,12 @@ export default function CreateVehicle() {
         <Box
           sx={{
             marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -75,7 +86,7 @@ export default function CreateVehicle() {
                   id="plate"
                   label="Placa"
                   name="plate"
-                  //autoComplete="family-name"
+                  // autoComplete="family-name"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -85,7 +96,7 @@ export default function CreateVehicle() {
                   id="brand"
                   label="Marca"
                   name="brand"
-                  //autoComplete="email"
+                  // autoComplete="email"
                 />
               </Grid>
 
@@ -96,7 +107,7 @@ export default function CreateVehicle() {
                   name="model"
                   label="Modelo"
                   id="modelo"
-                  //autoComplete="new-password"
+                  // autoComplete="new-password"
                 />
               </Grid>
               <Grid item xs={12} sm={6}>

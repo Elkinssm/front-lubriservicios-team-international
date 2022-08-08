@@ -1,10 +1,8 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -13,21 +11,42 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-
+import { registerOrderWorkTypes } from '../../actions/order-work-type-action';
+import { getAllOrders } from '../../actions/order-action';
+import { getAllWorkTypes } from '../../actions/work-type-action';
 
 const theme = createTheme();
 
-export default function CreateWorkType() {
+export default function CreateOrderWorkType() {
+  const [orders, setOrders] = useState([]);
+  const [workType, setWorkType] = useState([]);
+
+  useEffect(() => {
+    const allOrders = async () => {
+      const response = await getAllOrders();
+      setOrders(response.data);
+    };
+    allOrders();
+  }, []);
+
+  useEffect(() => {
+    const allWorkTypes = async () => {
+      const response = await getAllWorkTypes();
+      setWorkType(response.data);
+    };
+    allWorkTypes();
+  }, []);
+
   const history = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const registertData = {
-      name: data.get('name'),
-      description: data.get('description'),
+      workTypeId: 1, // data.get('workTypeId'),
+      orderId: 1, // data.get('descriorderIdption'),
     };
-    register(registertData).then(
+    registerOrderWorkTypes(registertData).then(
       (response) => {
         if (response.status === 201 || response.code === 201) {
           history('/');
@@ -54,7 +73,7 @@ export default function CreateWorkType() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Tipo de trabajo
+            Tipo de orden de trabajo
           </Typography>
           <Box
             component="form"
@@ -67,9 +86,9 @@ export default function CreateWorkType() {
                 <TextField
                   required
                   fullWidth
-                  id="name"
-                  label="Nombre"
-                  name="name"
+                  id="workTypeId"
+                  label="Tipo de trabajo"
+                  name="workTypeId"
                   // autoComplete="family-name"
                 />
               </Grid>
@@ -77,9 +96,9 @@ export default function CreateWorkType() {
                 <TextField
                   required
                   fullWidth
-                  id="description"
-                  label="Descripcion"
-                  name="description"
+                  id="orderId"
+                  label="Orden"
+                  name="orderId"
                   // autoComplete="email"
                 />
               </Grid>
@@ -90,7 +109,7 @@ export default function CreateWorkType() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Crear Trabajo
+              Crear Tipo orden de trabajo
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
