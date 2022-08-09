@@ -12,6 +12,8 @@ import CreateWorkType from './Pages/WorkType/CreateWorkType';
 import CreateRol from './Pages/Rol/CreateRol';
 import CreateWorkMaterials from './Pages/WorksMaterials/CreateWorkMaterials';
 import CreateOrderWorkType from './Pages/OrderWorkType/CreateOrderWorkType';
+import MaterialAccordion from './Pages/Materials/MaterialAccordion';
+import Footer from './Components/Footer/footer';
 
 function App() {
   return (
@@ -34,9 +36,22 @@ function App() {
             <Route exact path="/create-work-material" element={<CreateWorkMaterials />} />
             <Route exact path="/create-order-work-type/:id" element={<CreateOrderWorkType />} />
             <Route exact path="/create-rol" element={<CreateRol />} />
+            <Route exact path="/materials" element={<MaterialAccordion />} />
+            <Route
+              exact
+              path="*"
+              element={(
+                <>
+                  <h1>Error 404</h1>
+                  <strong>Esta pagina no existe</strong>
+                </>
+            )}
+            />
+
           </Routes>
         </Grid>
       </BrowserRouter>
+      <Footer />
     </div>
   );
 }

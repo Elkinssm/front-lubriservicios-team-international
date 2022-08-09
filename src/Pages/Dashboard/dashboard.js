@@ -14,7 +14,7 @@ function Dashboard() {
     allUsers();
   }, []);
 
-  console.log(getAllUsers());
+  console.log(users);
   return (
     <div>
       <AppContainer />

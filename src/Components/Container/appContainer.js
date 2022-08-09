@@ -18,8 +18,12 @@ import SearchIcon from '@mui/icons-material/Search';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import InputBase from '@mui/material/InputBase';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import { useNavigate } from 'react-router-dom';
+import PersonAddAltRoundedIcon from '@mui/icons-material/PersonAddAltRounded';
+import CarRepairIcon from '@mui/icons-material/CarRepair';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
+import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 
 import {
   Avatar, Grid, Menu, Tooltip,
@@ -106,8 +110,13 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function AppContainer() {
+  const history = useNavigate();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+
+  const goToUser = () => {
+    history('/register');
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -196,18 +205,53 @@ export default function AppContainer() {
             </DrawerHeader>
             <Divider />
             <List>
-              {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                <ListItem key={text} disablePadding>
-                  <ListItemButton>
-                    <ListItemIcon>
-                      {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                    </ListItemIcon>
-                    <ListItemText primary={text} />
-                  </ListItemButton>
-                </ListItem>
-              ))}
+              <ListItem disablePadding>
+                <ListItemButton onClick={() => goToUser('Usuarios')}>
+                  <ListItemIcon>
+                    <PersonAddAltRoundedIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Usuarios" />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <CarRepairIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Vehiculos" />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <InventoryIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Materiales" />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <PlaylistAddIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Ordenes" />
+                </ListItemButton>
+              </ListItem>
+
+              <ListItem disablePadding>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <HomeRepairServiceIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Tipo de trabajo" />
+                </ListItemButton>
+              </ListItem>
+
             </List>
-            <Divider />
+            {/* <Divider />
             <List>
               {['All mail', 'Trash', 'Spam'].map((text, index) => (
                 <ListItem key={text} disablePadding>
@@ -219,7 +263,7 @@ export default function AppContainer() {
                   </ListItemButton>
                 </ListItem>
               ))}
-            </List>
+            </List> */}
           </Drawer>
         </Grid>
         <Grid item spacing={2} xs={open ? 10 : 12} style={{ marginTop: '80px' }}>

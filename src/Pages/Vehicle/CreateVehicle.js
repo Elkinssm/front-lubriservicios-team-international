@@ -20,6 +20,7 @@ import { registerVehicle } from '../../actions/vehicle-action';
 const theme = createTheme();
 
 export default function CreateVehicle() {
+  const history = useNavigate();
   const [users, setUsers] = useState([]);
   const [customer, setCustomer] = useState([]);
 
@@ -34,8 +35,6 @@ export default function CreateVehicle() {
     };
     allUsers();
   }, []);
-
-  const history = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -169,13 +168,6 @@ export default function CreateVehicle() {
             >
               Crear Vehiculo
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>
