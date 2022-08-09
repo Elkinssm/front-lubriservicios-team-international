@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import React, { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -11,15 +12,34 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import {
+  FormControl, InputLabel, MenuItem, Select,
+} from '@mui/material';
 import { getAllUsers } from '../../actions/user-action';
 import { registerOrder } from '../../actions/order-action';
-import { getAllVehicles } from '../../actions/vehicle-action';
+import { orderStatus } from './models';
 
 const theme = createTheme();
 
 export default function CreateOrder() {
   const [users, setUsers] = useState([]);
+  const [status, setStatus] = useState([]);
+  const [customer, setCustomer] = useState([]);
+  const [userVehicle, setUserVehicle] = useState([]);
   const [vehicles, setVehicles] = useState([]);
+
+  const handleChangeCustomer = (user) => {
+    setVehicles([]);
+    setCustomer(user.id);
+    debugger;
+    setVehicles(user.vehicle);
+  };
+  const handleChangeStatus = (event) => {
+    setStatus(event.target.value);
+  };
+  const handleChangeVehicle = (event) => {
+    setUserVehicle(event.target.value);
+  };
 
   useEffect(() => {
     const allUsers = async () => {
@@ -27,14 +47,6 @@ export default function CreateOrder() {
       setUsers(response.data);
     };
     allUsers();
-  }, []);
-
-  useEffect(() => {
-    const allVehicles = async () => {
-      const response = await getAllVehicles();
-      setVehicles(response.data);
-    };
-    allVehicles();
   }, []);
 
   const history = useNavigate();
@@ -50,14 +62,16 @@ export default function CreateOrder() {
       ownerDescription: data.get('ownerDescription'),
       diagnostic: data.get('diagnostic'),
       workPerformed: data.get('workPerformed'),
-      status: data.get('status'),
-      userId: 1,
-      vehicleId: 1,
+      status,
+      userId: customer,
+      vehicleId: userVehicle,
     };
     registerOrder(registertData).then(
       (response) => {
         if (response.status === 201 || response.code === 201) {
-          history('/');
+          debugger;
+          console.log(response);
+          history(`/create-order-work-type/${response.data.id}`);
         } else {
         }
       },
@@ -159,13 +173,60 @@ export default function CreateOrder() {
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="status"
-                  label="Estado"
-                  name="status"
-                />
+                <FormControl fullWidth>
+                  <InputLabel id="simple-select-label">Estado</InputLabel>
+                  <Select
+                    labelId="status"
+                    id="status"
+                    label="Estado"
+                    onChange={handleChangeStatus}
+                  >
+                    {orderStatus.map((item) => <MenuItem value={item.key}>{item.value}</MenuItem>)}
+
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id="simple-select-label">Cliente</InputLabel>
+                  <Select
+                    labelId="customer"
+                    id="customer"
+                    label="Cliente"
+
+                  >
+                    {users.map((user) => (
+                      <MenuItem
+                        value={user.id}
+                        onClick={(e) => handleChangeCustomer(user, e)}
+                      >
+                        {user.name}
+                      </MenuItem>
+                    ))}
+
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id="simple-select-label">Vehiculo</InputLabel>
+                  <Select
+                    labelId="userVehicle"
+                    id="userVehicle"
+                    label="Vehiculo"
+                    onChange={handleChangeVehicle}
+                  >
+                    {vehicles
+                    && vehicles.map((car) => (
+                      <MenuItem
+                        value={car.id}
+                      >
+                        {car.plate}
+                      </MenuItem>
+                    ))}
+
+                  </Select>
+                </FormControl>
               </Grid>
             </Grid>
             <Button

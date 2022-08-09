@@ -12,3 +12,8 @@ export const documentTypes = [
     value: 'Cedula de extranjeria',
   },
 ];
+
+export const defaultValues = {
+  date: null,
+  observations: null,
+};

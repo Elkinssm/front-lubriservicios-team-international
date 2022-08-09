@@ -11,6 +11,9 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import {
+  FormControl, InputLabel, MenuItem, Select,
+} from '@mui/material';
 import { getAllUsers } from '../../actions/user-action';
 import { registerVehicle } from '../../actions/vehicle-action';
 
@@ -18,6 +21,11 @@ const theme = createTheme();
 
 export default function CreateVehicle() {
   const [users, setUsers] = useState([]);
+  const [customer, setCustomer] = useState([]);
+
+  const handleChange = (event) => {
+    setCustomer(event.target.value);
+  };
 
   useEffect(() => {
     const allUsers = async () => {
@@ -39,7 +47,7 @@ export default function CreateVehicle() {
       serialChasis: data.get('serialChasis'),
       serialEngine: data.get('serialEngine'),
       color: data.get('color'),
-      userId: 3,
+      userId: customer,
     };
     registerVehicle(registertData).then(
       (response) => {
@@ -137,6 +145,20 @@ export default function CreateVehicle() {
                   label="Serial de motor"
                   name="serialEngine"
                 />
+              </Grid>
+              <Grid item xs={12}>
+                <FormControl fullWidth>
+                  <InputLabel id="simple-select-label">Cliente</InputLabel>
+                  <Select
+                    labelId="customer"
+                    id="customer"
+                    label="Cliente"
+                    onChange={handleChange}
+                  >
+                    {users.map((user) => <MenuItem value={user.id}>{user.name}</MenuItem>)}
+
+                  </Select>
+                </FormControl>
               </Grid>
             </Grid>
             <Button

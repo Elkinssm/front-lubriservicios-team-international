@@ -2,15 +2,17 @@ import React, { useEffect, useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import {
+  Checkbox,
+  FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem,
+} from '@mui/material';
 import { registerOrderWorkTypes } from '../../actions/order-work-type-action';
 import { getAllOrders } from '../../actions/order-action';
 import { getAllWorkTypes } from '../../actions/work-type-action';
@@ -20,6 +22,18 @@ const theme = createTheme();
 export default function CreateOrderWorkType() {
   const [orders, setOrders] = useState([]);
   const [workType, setWorkType] = useState([]);
+  const [orderWorks, setOrderWorks] = useState([]);
+  const [works, setWorks] = useState([]);
+  const { id } = useParams();
+  const [checked, setChecked] = useState([true, false]);
+
+  const handleChangeWorkType = (event) => {
+    setWorks(event.target.value);
+  };
+
+  const handleChange = (event) => {
+    setChecked(event.target.checked);
+  };
 
   useEffect(() => {
     const allOrders = async () => {
@@ -43,8 +57,8 @@ export default function CreateOrderWorkType() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const registertData = {
-      workTypeId: 1, // data.get('workTypeId'),
-      orderId: 1, // data.get('descriorderIdption'),
+      workTypeId: works,
+      orderId: id,
     };
     registerOrderWorkTypes(registertData).then(
       (response) => {
@@ -83,24 +97,28 @@ export default function CreateOrderWorkType() {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="workTypeId"
-                  label="Tipo de trabajo"
-                  name="workTypeId"
-                  // autoComplete="family-name"
-                />
+                <FormControl fullWidth>
+                  <Typography>Tipo de trabajo</Typography>
+                  <FormControlLabel
+                    label="Tipo de trabajo"
+                    control={(
+                      <Checkbox
+                        checked={checked}
+                        onChange={handleChange}
+                        inputProps={{ 'aria-label': 'controlled' }}
+
+                      />
+)}
+                  />
+
+                  {/* {workType.map((work) => <Checkbox value={work.id}>{work.name}</Checkbox>)} */}
+
+                </FormControl>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="orderId"
-                  label="Orden"
-                  name="orderId"
-                  // autoComplete="email"
-                />
+                <FormControl fullWidth>
+                  <InputLabel id="simple-select-label">Orden</InputLabel>
+                </FormControl>
               </Grid>
             </Grid>
             <Button
@@ -111,13 +129,6 @@ export default function CreateOrderWorkType() {
             >
               Crear Tipo orden de trabajo
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>

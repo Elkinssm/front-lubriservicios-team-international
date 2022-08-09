@@ -32,7 +32,7 @@ function App() {
               element={<CreateWorkType />}
             />
             <Route exact path="/create-work-material" element={<CreateWorkMaterials />} />
-            <Route exact path="/create-order-work-type" element={<CreateOrderWorkType />} />
+            <Route exact path="/create-order-work-type/:id" element={<CreateOrderWorkType />} />
             <Route exact path="/create-rol" element={<CreateRol />} />
           </Routes>
         </Grid>

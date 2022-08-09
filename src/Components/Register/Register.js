@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -22,7 +22,7 @@ const theme = createTheme();
 export default function Register() {
   const history = useNavigate();
 
-  const [documentType, setDocumentType] = React.useState('');
+  const [documentType, setDocumentType] = useState('');
 
   const handleChange = (event) => {
     setDocumentType(event.target.value);
@@ -39,7 +39,7 @@ export default function Register() {
       address: data.get('address'),
       documentType,
       cellPhone: data.get('cellPhone'),
-      roleId: 3,
+      roleId: 4,
     };
     register(registertData).then(
       (response) => {
@@ -119,11 +119,10 @@ export default function Register() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <FormControl fullWidth>
-                  <InputLabel id="demo-simple-select-label">Tipo de documento</InputLabel>
+                  <InputLabel id="simple-select-label">Tipo de documento</InputLabel>
                   <Select
                     labelId="documentType"
                     id="documentType"
-                    value={documentType}
                     label="Tipo de documento"
                     onChange={handleChange}
                   >

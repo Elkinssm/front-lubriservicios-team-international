@@ -1,11 +1,11 @@
 import HttpClient from './HttpClient';
 
-export const registerWorkType = (patientData) => new Promise((resolve, reject) => {
+export const registerRol = (patientData) => new Promise((resolve, reject) => {
   const headers = {
     'Content-Type': 'application/json',
   };
   HttpClient.post(
-    'http://localhost:3000/api/lubrisernorte/v1/work-types/',
+    'http://localhost:3000/api/lubrisernorte/v1/rols/',
     patientData,
     headers,
   )
@@ -17,14 +17,11 @@ export const registerWorkType = (patientData) => new Promise((resolve, reject) =
     });
 });
 
-export const getAllWorkTypes = () => new Promise((resolve, reject) => {
+export const getRols = () => new Promise((resolve, reject) => {
   const headers = {
     'Content-Type': 'application/json',
   };
-  HttpClient.get(
-    'http://localhost:3000/api/lubrisernorte/v1/work-types/',
-    headers,
-  )
+  HttpClient.get('http://localhost:3000/api/lubrisernorte/v1/rols/', headers)
     .then((response) => {
       resolve(response);
     })
@@ -34,12 +31,12 @@ export const getAllWorkTypes = () => new Promise((resolve, reject) => {
     });
 });
 
-export const getWorkTypesById = (id) => new Promise((resolve, reject) => {
+export const getRolById = (id) => new Promise((resolve, reject) => {
   const headers = {
     'Content-Type': 'application/json',
   };
   HttpClient.get(
-    `http://localhost:3000/api/lubrisernorte/v1/work-types/${id}`,
+    `http://localhost:3000/api/lubrisernorte/v1/rols/${id}`,
 
     headers,
   )
@@ -55,12 +52,12 @@ export const getWorkTypesById = (id) => new Promise((resolve, reject) => {
     });
 });
 
-export const deleteWorkType = (id) => new Promise((resolve, reject) => {
+export const deleteRols = (id) => new Promise((resolve, reject) => {
   const headers = {
     'Content-Type': 'application/json',
   };
   HttpClient.delete(
-    `http://localhost:3000/api/lubrisernorte/v1/work-types/${id}`,
+    `http://localhost:3000/api/lubrisernorte/v1/rols/${id}`,
     headers,
   )
     .then((response) => {
@@ -71,12 +68,12 @@ export const deleteWorkType = (id) => new Promise((resolve, reject) => {
     });
 });
 
-export const updateWorkTypes = (id, body) => new Promise((resolve, reject) => {
+export const updateRols = (id, body) => new Promise((resolve, reject) => {
   const headers = {
     'Content-Type': 'application/json',
   };
   HttpClient.put(
-    `http://localhost:3000/api/lubrisernorte/v1/work-types/${id}`,
+    `http://localhost:3000/api/lubrisernorte/v1/rols/${id}`,
     body,
     headers``,
   )
