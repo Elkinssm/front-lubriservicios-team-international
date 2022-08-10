@@ -15,6 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   FormControl, InputLabel, MenuItem, Select,
 } from '@mui/material';
+import Swal from 'sweetalert2';
 import { getAllUsers } from '../../actions/user-action';
 import { registerOrder } from '../../actions/order-action';
 import { orderStatus } from './models';
@@ -69,13 +70,30 @@ export default function CreateOrder() {
     registerOrder(registertData).then(
       (response) => {
         if (response.status === 201 || response.code === 201) {
-          debugger;
+          Swal.fire(
+            'Registro',
+            'Orden creada correctamente',
+            'success',
+          );
           console.log(response);
           history(`/create-order-work-type/${response.data.id}`);
+        } else if (response.status === 400 || response.code === 400) {
+          Swal.fire(
+            'Acceso',
+            'Por favor valide los datos ingresados',
+            'error',
+            'Vuelva a intentarlo',
+          );
         } else {
+          Swal.fire({
+            title: 'Autorizacion',
+            text: 'Usted no tiene autorizacion',
+            icon: 'warning',
+            footer: 'Contacte el administrador',
+          });
         }
       },
-      (error) => {},
+
     );
   };
 

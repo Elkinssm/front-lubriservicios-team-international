@@ -13,22 +13,6 @@ axios.interceptors.request.use(
   },
   (error) => Promise.reject(error),
 );
-
-axios.interceptors.response.use(
-  (response) => response,
-  async (error) => {
-    if (
-      (error?.response?.status === 401 || error?.response?.status === 403)
-      && !error?.response?.config?.url?.includes('reset-password')
-    ) {
-      console.log(error?.response);
-      window.localStorage.removeItem('token_app');
-      window.location.assign('/auth/login/:message');
-    }
-    return Promise.reject(error);
-  },
-);
-
 const requestGeneric = {
   get: (url) => axios.get(url),
   post: (url, body) => axios.post(url, body),

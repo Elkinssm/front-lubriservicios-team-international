@@ -11,8 +11,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   Checkbox,
-  FormControl, FormControlLabel, FormLabel, InputLabel, MenuItem,
+  FormControl, FormControlLabel, InputLabel,
 } from '@mui/material';
+import Swal from 'sweetalert2';
 import { registerOrderWorkTypes } from '../../actions/order-work-type-action';
 import { getAllOrders } from '../../actions/order-action';
 import { getAllWorkTypes } from '../../actions/work-type-action';
@@ -63,11 +64,29 @@ export default function CreateOrderWorkType() {
     registerOrderWorkTypes(registertData).then(
       (response) => {
         if (response.status === 201 || response.code === 201) {
+          Swal.fire(
+            'Registro',
+            'Orden tipo de trabajo creada correctamente',
+            'success',
+          );
           history('/');
+        } else if (response.status === 400 || response.code === 400) {
+          Swal.fire(
+            'Acceso',
+            'Por favor valide los datos ingresados',
+            'error',
+            'Vuelva a intentarlo',
+          );
         } else {
+          Swal.fire({
+            title: 'Autorizacion',
+            text: 'Usted no tiene autorizacion',
+            icon: 'warning',
+            footer: 'Contacte el administrador',
+          });
         }
       },
-      (error) => {},
+
     );
   };
 

@@ -14,6 +14,7 @@ export const registerOrder = (patientData) => new Promise((resolve, reject) => {
     })
     .catch((error) => {
       resolve(error.response);
+      reject(error.response);
     });
 });
 
@@ -68,6 +69,7 @@ export const deleteOrders = (id) => new Promise((resolve, reject) => {
     })
     .catch((error) => {
       resolve(error.response);
+      reject(error.response);
     });
 });
 
@@ -85,5 +87,6 @@ export const updateOrders = (id, body) => new Promise((resolve, reject) => {
     })
     .catch((error) => {
       resolve(error.response);
+      reject(error.response);
     });
 });

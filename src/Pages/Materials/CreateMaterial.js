@@ -3,7 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -11,6 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { registerMaterial } from '../../actions/material-action';
 
 const theme = createTheme();
@@ -31,11 +31,29 @@ export default function CreateMaterial() {
     registerMaterial(registertData).then(
       (response) => {
         if (response.status === 201 || response.code === 201) {
-          history('/');
+          Swal.fire(
+            'Registro',
+            'Material creado correctamente',
+            'success',
+          );
+          history('/materials');
+        } else if (response.status === 400 || response.code === 400) {
+          Swal.fire(
+            'Acceso',
+            'Por favor valide los datos ingresados',
+            'error',
+            'Vuelva a intentarlo',
+          );
         } else {
+          Swal.fire({
+            title: 'Autorizacion',
+            text: 'Usted no tiene autorizacion',
+            icon: 'warning',
+            footer: 'Contacte el administrador',
+          });
         }
       },
-      (error) => {},
+
     );
   };
 
@@ -71,7 +89,6 @@ export default function CreateMaterial() {
                   id="name"
                   label="Nombre"
                   name="name"
-                  // autoComplete="family-name"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -81,7 +98,6 @@ export default function CreateMaterial() {
                   id="description"
                   label="Descripcion"
                   name="description"
-                  // autoComplete="email"
                 />
               </Grid>
 
@@ -92,7 +108,6 @@ export default function CreateMaterial() {
                   name="reference"
                   label="Referencia"
                   id="reference"
-                  // autoComplete="new-password"
                 />
               </Grid>
               <Grid item xs={12}>

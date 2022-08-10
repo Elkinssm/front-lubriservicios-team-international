@@ -1,3 +1,4 @@
+/* eslint-disable no-debugger */
 import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -12,6 +13,7 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import { Checkbox, FormControlLabel } from '@mui/material';
+import Swal from 'sweetalert2';
 import xs from '../../Images/Logo.png';
 import { login } from '../../actions/login-action';
 
@@ -37,6 +39,7 @@ function Copyright() {
 const theme = createTheme();
 
 export default function SignIn() {
+  // const MySwal = withReactContent(Swal);
   const history = useNavigate();
 
   const handleSubmit = (event) => {
@@ -53,17 +56,24 @@ export default function SignIn() {
             'token_app',
             response.data != null && response.data.token,
           );
-
-          const temporaly = JSON.parse(localStorage.getItem('state'));
-          const body = {
-            token: temporaly?.token?.token,
-            email: temporaly?.userInfo?.email,
-          };
           history('/dashboard');
         } else {
+          Swal.fire({
+            title: 'Acceso',
+            text: 'Porfavor revise los datos de usuario',
+            icon: 'error',
+            button: 'Ok',
+            confirmButtonColor: '#1565C0',
+
+          });
         }
       },
-      (error) => { },
+      (error) => {
+        console.log(error);
+        (
+          <h1>Error</h1>
+        );
+      },
     );
   };
 

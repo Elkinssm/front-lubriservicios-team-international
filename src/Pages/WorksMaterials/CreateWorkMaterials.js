@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import { registerWorkMaterials } from '../../actions/work-materials-action';
 import { getAllWorkTypes } from '../../actions/work-type-action';
 import { getAllMaterials } from '../../actions/material-action';
@@ -50,11 +51,28 @@ export default function CreateWorkMaterials() {
     registerWorkMaterials(registertData).then(
       (response) => {
         if (response.status === 201 || response.code === 201) {
+          Swal.fire(
+            'Registro',
+            'Material de trabajo creado correctamente',
+            'success',
+          );
           history('/');
+        } else if (response.status === 400 || response.code === 400) {
+          Swal.fire(
+            'Acceso',
+            'Por favor valide los datos ingresados',
+            'error',
+            'Vuelva a intentarlo',
+          );
         } else {
+          Swal.fire({
+            title: 'Autorizacion',
+            text: 'Usted no tiene autorizacion',
+            icon: 'warning',
+            footer: 'Contacte el administrador',
+          });
         }
       },
-      (error) => {},
     );
   };
 

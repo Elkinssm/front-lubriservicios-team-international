@@ -3,7 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -14,6 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import {
   FormControl, InputLabel, MenuItem, Select,
 } from '@mui/material';
+import Swal from 'sweetalert2';
 import { getAllUsers } from '../../actions/user-action';
 import { registerVehicle } from '../../actions/vehicle-action';
 
@@ -51,13 +51,29 @@ export default function CreateVehicle() {
     registerVehicle(registertData).then(
       (response) => {
         if (response.status === 201 || response.code === 201) {
+          Swal.fire(
+            'Registro',
+            'Vehiculo creado correctamente',
+            'success',
+          );
           history('/');
+        } else if (response.status === 400 || response.code === 400) {
+          Swal.fire(
+            'Acceso',
+            'Por favor valide los datos ingresados',
+            'error',
+            'Vuelva a intentarlo',
+          );
         } else {
+          Swal.fire({
+            title: 'Autorizacion',
+            text: 'Usted no tiene autorizacion',
+            icon: 'warning',
+            footer: 'Contacte el administrador',
+          });
         }
       },
-      (error) => {
-        console.log(error);
-      },
+
     );
   };
 

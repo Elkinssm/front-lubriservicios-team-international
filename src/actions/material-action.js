@@ -14,6 +14,7 @@ export const registerMaterial = (patientData) => new Promise((resolve, reject) =
     })
     .catch((error) => {
       resolve(error.response);
+      reject(error.response);
     });
 });
 
@@ -68,6 +69,7 @@ export const deleteMaterials = (id) => new Promise((resolve, reject) => {
     })
     .catch((error) => {
       resolve(error.response);
+      reject(error.response);
     });
 });
 
@@ -85,5 +87,6 @@ export const updateMaterials = (id, body) => new Promise((resolve, reject) => {
     })
     .catch((error) => {
       resolve(error.response);
+      reject(error.response);
     });
 });

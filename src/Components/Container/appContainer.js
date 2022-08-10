@@ -18,7 +18,9 @@ import SearchIcon from '@mui/icons-material/Search';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import InputBase from '@mui/material/InputBase';
 import ListItemText from '@mui/material/ListItemText';
-import { useNavigate } from 'react-router-dom';
+import {
+  Outlet, useNavigate,
+} from 'react-router-dom';
 import PersonAddAltRoundedIcon from '@mui/icons-material/PersonAddAltRounded';
 import CarRepairIcon from '@mui/icons-material/CarRepair';
 import InventoryIcon from '@mui/icons-material/Inventory';
@@ -28,8 +30,6 @@ import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import {
   Avatar, Grid, Menu, Tooltip,
 } from '@mui/material';
-
-import MainCard from '../Card/mainCard';
 
 const drawerWidth = 240;
 
@@ -115,7 +115,7 @@ export default function AppContainer() {
   const [open, setOpen] = React.useState(false);
 
   const goToUser = () => {
-    history('/register');
+    history('/dashboard/users');
   };
 
   const handleDrawerOpen = () => {
@@ -128,7 +128,6 @@ export default function AppContainer() {
 
   return (
     <Box sx={{ display: 'flex', minHeight: '90vh' }}>
-      <CssBaseline />
       <AppBar position="fixed" open={open}>
         <Toolbar>
           <IconButton
@@ -183,75 +182,76 @@ export default function AppContainer() {
           </Box>
         </Toolbar>
       </AppBar>
+
       <Grid container spacing={2} xs={12}>
-        <Grid item xs={2} spacing={2}>
-          <Drawer
-            sx={{
+
+        <Drawer
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
               width: drawerWidth,
-              flexShrink: 0,
-              '& .MuiDrawer-paper': {
-                width: drawerWidth,
-                boxSizing: 'border-box',
-              },
-            }}
-            variant="persistent"
-            anchor="left"
-            open={open}
-          >
-            <DrawerHeader>
-              <IconButton onClick={handleDrawerClose}>
-                {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-              </IconButton>
-            </DrawerHeader>
-            <Divider />
-            <List>
-              <ListItem disablePadding>
-                <ListItemButton onClick={() => goToUser('Usuarios')}>
-                  <ListItemIcon>
-                    <PersonAddAltRoundedIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Usuarios" />
-                </ListItemButton>
-              </ListItem>
+              boxSizing: 'border-box',
+            },
+          }}
+            // variant="persistent"
+          anchor="left"
+          open={open}
+        >
+          <DrawerHeader style={{ backgroundColor: '#f5f70f' }}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          <List style={{ backgroundColor: '#f5f70f' }}>
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => goToUser('Usuarios')}>
+                <ListItemIcon>
+                  <PersonAddAltRoundedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Usuarios" />
+              </ListItemButton>
+            </ListItem>
 
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <CarRepairIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Vehiculos" />
-                </ListItemButton>
-              </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <CarRepairIcon />
+                </ListItemIcon>
+                <ListItemText primary="Vehiculos" />
+              </ListItemButton>
+            </ListItem>
 
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <InventoryIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Materiales" />
-                </ListItemButton>
-              </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <InventoryIcon />
+                </ListItemIcon>
+                <ListItemText primary="Materiales" />
+              </ListItemButton>
+            </ListItem>
 
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <PlaylistAddIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Ordenes" />
-                </ListItemButton>
-              </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <PlaylistAddIcon />
+                </ListItemIcon>
+                <ListItemText primary="Ordenes" />
+              </ListItemButton>
+            </ListItem>
 
-              <ListItem disablePadding>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <HomeRepairServiceIcon />
-                  </ListItemIcon>
-                  <ListItemText primary="Tipo de trabajo" />
-                </ListItemButton>
-              </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <HomeRepairServiceIcon />
+                </ListItemIcon>
+                <ListItemText primary="Tipo de trabajo" />
+              </ListItemButton>
+            </ListItem>
 
-            </List>
-            {/* <Divider />
+          </List>
+          {/* <Divider />
             <List>
               {['All mail', 'Trash', 'Spam'].map((text, index) => (
                 <ListItem key={text} disablePadding>
@@ -264,22 +264,12 @@ export default function AppContainer() {
                 </ListItem>
               ))}
             </List> */}
-          </Drawer>
-        </Grid>
-        <Grid item spacing={2} xs={open ? 10 : 12} style={{ marginTop: '80px' }}>
-          <Grid container spacing={2} xs={12}>
-            <Grid item xs={4} spacing={2}>
-              <MainCard />
-            </Grid>
-            <Grid item xs={4} spacing={2}>
-              <MainCard />
-            </Grid>
-            <Grid item xs={4} spacing={3}>
-              <MainCard />
-              <Divider />
-              <MainCard />
-            </Grid>
-          </Grid>
+        </Drawer>
+
+        <Grid item spacing={2} xs={12} style={{ marginTop: '100px' }}>
+          {/* <Grid container spacing={2} xs={12} /> */}
+
+          <Outlet />
         </Grid>
       </Grid>
     </Box>

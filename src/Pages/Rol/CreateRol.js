@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
-import { register } from '../../actions/login-action';
+import Swal from 'sweetalert2';
 import { registerRol } from '../../actions/rol-action';
 
 const theme = createTheme();
@@ -28,11 +28,29 @@ export default function CreateRol() {
     registerRol(registertData).then(
       (response) => {
         if (response.status === 201 || response.code === 201) {
+          Swal.fire(
+            'Registro',
+            'Rol creado correctamente',
+            'success',
+          );
           history('/');
+        } else if (response.status === 400 || response.code === 400) {
+          Swal.fire(
+            'Acceso',
+            'Por favor valide los datos ingresados',
+            'error',
+            'Vuelva a intentarlo',
+          );
         } else {
+          Swal.fire({
+            title: 'Autorizacion',
+            text: 'Usted no tiene autorizacion',
+            icon: 'warning',
+            footer: 'Contacte el administrador',
+          });
         }
       },
-      (error) => {},
+
     );
   };
 

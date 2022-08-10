@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import {
   FormControl, InputLabel, MenuItem, Select,
 } from '@mui/material';
@@ -44,11 +45,28 @@ export default function Register() {
     register(registertData).then(
       (response) => {
         if (response.status === 201 || response.code === 201) {
-          history('/');
+          Swal.fire(
+            'Registro',
+            'Usuario creado correctamente',
+            'success',
+          );
+          history('/auth/login');
+        } else if (response.status === 400 || response.code === 400) {
+          Swal.fire(
+            'Acceso',
+            'Por favor valide los datos ingresados',
+            'error',
+            'Vuelva a intentarlo',
+          );
         } else {
+          Swal.fire({
+            title: 'Autorizacion',
+            text: 'Usted no tiene autorizacion',
+            icon: 'warning',
+            footer: 'Contacte el administrador',
+          });
         }
       },
-      (error) => {},
     );
   };
 
