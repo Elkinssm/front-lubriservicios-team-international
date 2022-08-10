@@ -56,7 +56,7 @@ export default function CreateVehicle() {
             'Vehiculo creado correctamente',
             'success',
           );
-          history('/');
+          history('/dashboard/vehicles');
         } else if (response.status === 400 || response.code === 400) {
           Swal.fire(
             'Acceso',
