@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Accordion, AccordionDetails, AccordionSummary,
+  Grid,
   Tooltip, Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -9,25 +10,26 @@ import { ExpandMoreOutlined } from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import * as IdKey from 'short-uuid';
+import { getAllByRole } from '@testing-library/react';
 import { headers } from './models';
-import { deleteMaterials, getAllMaterials, updateMaterials } from '../../actions/material-action';
+import { deleteRols, getRols, updateRols } from '../../actions/rol-action';
 
-export default function MaterialAccordion() {
-  const [materials, setMaterials] = useState([]);
+export default function RolAccordion() {
+  const [rols, setRols] = useState([]);
   const id = IdKey.generate();
 
   useEffect(() => {
-    const allMaterials = async () => {
-      const response = await getAllMaterials();
+    const allRols = async () => {
+      const response = await getRols();
       console.log(response.data);
-      setMaterials(response.data);
+      setRols(response.data);
     };
-    allMaterials();
+    allRols();
   }, []);
 
   const onEdit = () => {
     const updateUserAsync = async () => {
-      const response = await updateMaterials(id);
+      const response = await updateRols(id);
       console.log(response.data);
     };
     updateUserAsync();
@@ -35,7 +37,7 @@ export default function MaterialAccordion() {
 
   const onDelete = (id) => {
     const deleteUserAsync = async () => {
-      const response = await deleteMaterials(id);
+      const response = await deleteRols(id);
       console.log(response.data);
     };
     deleteUserAsync();
@@ -63,8 +65,8 @@ export default function MaterialAccordion() {
   return (
 
     <>
-      <Typography variant="h5">Listado de materiales</Typography>
-      {materials.map((material) => (
+      <Typography variant="h5">Listado de roles</Typography>
+      {rols.map((rol) => (
         <Accordion
           style={{
             borderTopLeftRadius: '0px',
@@ -85,7 +87,7 @@ export default function MaterialAccordion() {
                   {header.title}
                 </Typography>
                 <Typography>
-                  {getValueByKey(material, header)}
+                  {getValueByKey(rol, header)}
                 </Typography>
               </div>
             ))}
@@ -97,7 +99,7 @@ export default function MaterialAccordion() {
 
               <Tooltip title="Editar" arrow placement="top">
                 <EditIcon
-                  onClick={() => onEdit(material.id)}
+                  onClick={() => onEdit(rol.id)}
                 />
               </Tooltip>
 
@@ -105,7 +107,7 @@ export default function MaterialAccordion() {
 
               <Tooltip title="Anular" arrow placement="top">
                 <DeleteIcon
-                  onClick={() => onDelete(material.id)}
+                  onClick={() => onDelete(rol.id)}
                 />
               </Tooltip>
 
@@ -114,19 +116,19 @@ export default function MaterialAccordion() {
           {/* <AccordionDetails>
             <div>
               <Grid container spacing={3}>
-                {material.vehicle.map((car) => (
+                {car.user.map((info) => (
                   <Grid item xs={2}>
                     <Typography>
-                      Placa
+                      Nombre
                     </Typography>
                     <Typography>
-                      {car.plate}
+                      {info.name}
                     </Typography>
                     <Typography>
-                      Marca
+                      Celular
                     </Typography>
                     <Typography>
-                      {car.brand}
+                      {info.cellPhone}
                     </Typography>
                   </Grid>
                 ))}

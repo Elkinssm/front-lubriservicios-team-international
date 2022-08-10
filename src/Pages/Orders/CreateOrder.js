@@ -32,7 +32,6 @@ export default function CreateOrder() {
   const handleChangeCustomer = (user) => {
     setVehicles([]);
     setCustomer(user.id);
-    debugger;
     setVehicles(user.vehicle);
   };
   const handleChangeStatus = (event) => {

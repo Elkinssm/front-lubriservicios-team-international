@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react';
 import {
   Accordion, AccordionDetails, AccordionSummary,
+  Button,
+  Grid,
   Tooltip, Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -10,24 +12,24 @@ import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import * as IdKey from 'short-uuid';
 import { headers } from './models';
-import { deleteMaterials, getAllMaterials, updateMaterials } from '../../actions/material-action';
+import { deleteVehicles, getAllVehicles, updateVehicles } from '../../actions/vehicle-action';
 
-export default function MaterialAccordion() {
-  const [materials, setMaterials] = useState([]);
+export default function VehicleAccordion() {
+  const [vehicles, setVehicles] = useState([]);
   const id = IdKey.generate();
 
   useEffect(() => {
-    const allMaterials = async () => {
-      const response = await getAllMaterials();
+    const allVehicles = async () => {
+      const response = await getAllVehicles();
       console.log(response.data);
-      setMaterials(response.data);
+      setVehicles(response.data);
     };
-    allMaterials();
+    allVehicles();
   }, []);
 
   const onEdit = () => {
     const updateUserAsync = async () => {
-      const response = await updateMaterials(id);
+      const response = await updateVehicles(id);
       console.log(response.data);
     };
     updateUserAsync();
@@ -35,7 +37,7 @@ export default function MaterialAccordion() {
 
   const onDelete = (id) => {
     const deleteUserAsync = async () => {
-      const response = await deleteMaterials(id);
+      const response = await deleteVehicles(id);
       console.log(response.data);
     };
     deleteUserAsync();
@@ -63,8 +65,14 @@ export default function MaterialAccordion() {
   return (
 
     <>
-      <Typography variant="h5">Listado de materiales</Typography>
-      {materials.map((material) => (
+      <Typography variant="h5">Listado de vehiculos</Typography>
+      <div style={{ textAlign: 'end' }}>
+        <Button variant="contained" color="success">
+          Crear
+        </Button>
+      </div>
+
+      {vehicles.map((car) => (
         <Accordion
           style={{
             borderTopLeftRadius: '0px',
@@ -85,7 +93,7 @@ export default function MaterialAccordion() {
                   {header.title}
                 </Typography>
                 <Typography>
-                  {getValueByKey(material, header)}
+                  {getValueByKey(car, header)}
                 </Typography>
               </div>
             ))}
@@ -97,7 +105,7 @@ export default function MaterialAccordion() {
 
               <Tooltip title="Editar" arrow placement="top">
                 <EditIcon
-                  onClick={() => onEdit(material.id)}
+                  onClick={() => onEdit(car.id)}
                 />
               </Tooltip>
 
@@ -105,7 +113,7 @@ export default function MaterialAccordion() {
 
               <Tooltip title="Anular" arrow placement="top">
                 <DeleteIcon
-                  onClick={() => onDelete(material.id)}
+                  onClick={() => onDelete(car.id)}
                 />
               </Tooltip>
 
@@ -114,19 +122,19 @@ export default function MaterialAccordion() {
           {/* <AccordionDetails>
             <div>
               <Grid container spacing={3}>
-                {material.vehicle.map((car) => (
+                {car.user.map((info) => (
                   <Grid item xs={2}>
                     <Typography>
-                      Placa
+                      Nombre
                     </Typography>
                     <Typography>
-                      {car.plate}
+                      {info.name}
                     </Typography>
                     <Typography>
-                      Marca
+                      Celular
                     </Typography>
                     <Typography>
-                      {car.brand}
+                      {info.cellPhone}
                     </Typography>
                   </Grid>
                 ))}

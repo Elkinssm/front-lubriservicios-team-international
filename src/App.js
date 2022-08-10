@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Grid } from '@mui/material';
 import SignIn from './Components/SignIn/SignIn';
 import Dashboard from './Pages/Dashboard/dashboard';
 import Register from './Components/Register/Register';
@@ -15,6 +14,10 @@ import MaterialAccordion from './Pages/Materials/MaterialAccordion';
 import Footer from './Components/Footer/footer';
 import UserAccordion from './Components/Register/UsersAccordion';
 import CreateWorkType from './Pages/WorkType/CreateWorkType';
+import VehicleAccordion from './Pages/Vehicle/VehicleAccordion';
+import OrderAccordion from './Pages/Orders/OrderAccordion';
+import WorkTypeAccordion from './Pages/WorkType/WorkTypeAccordion';
+import RolAccordion from './Pages/Rol/RolAccordion';
 
 function App() {
   return (
@@ -41,6 +44,11 @@ function App() {
             <Route exact path="create-rol" element={<CreateRol />} />
             <Route exact path="materials" element={<MaterialAccordion />} />
             <Route exact path="users" element={<UserAccordion />} />
+            <Route exact path="vehicles" element={<VehicleAccordion />} />
+            <Route exact path="orders" element={<OrderAccordion />} />
+            <Route exact path="work-types" element={<WorkTypeAccordion />} />
+            <Route exact path="rols" element={<RolAccordion />} />
+
           </Route>
           <Route
             exact

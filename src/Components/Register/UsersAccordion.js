@@ -19,7 +19,6 @@ export default function UserAccordion() {
 
   useEffect(() => {
     const allUsers = async () => {
-      debugger;
       const response = await getAllUsers();
       console.log(response.data);
       setUsers(response.data);
@@ -27,7 +26,7 @@ export default function UserAccordion() {
     allUsers();
   }, []);
 
-  const onEdit = (id) => {
+  const onEdit = () => {
     const updateUserAsync = async () => {
       const response = await updateUsers(id);
       console.log(response.data);
@@ -96,15 +95,12 @@ export default function UserAccordion() {
                 <VisibilityIcon />
               </Tooltip>
               &nbsp;&nbsp;
-
               <Tooltip title="Editar" arrow placement="top">
                 <EditIcon
                   onClick={() => onEdit(user.id)}
                 />
               </Tooltip>
-
               &nbsp;&nbsp;
-
               <Tooltip title="Anular" arrow placement="top">
                 <DeleteIcon
                   onClick={() => onDelete(user.id)}

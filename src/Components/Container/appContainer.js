@@ -2,7 +2,6 @@ import * as React from 'react';
 import { styled, useTheme, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -26,20 +25,13 @@ import CarRepairIcon from '@mui/icons-material/CarRepair';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
+import HomeIcon from '@mui/icons-material/Home';
 
 import {
   Avatar, Grid, Menu, Tooltip,
 } from '@mui/material';
 
 const drawerWidth = 240;
-
-// const Item = styled(Paper)(({ theme }) => ({
-//   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-//   ...theme.typography.body2,
-//   padding: theme.spacing(1),
-//   textAlign: 'center',
-//   color: theme.palette.text.secondary,
-// }));
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -114,8 +106,28 @@ export default function AppContainer() {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
 
+  const goToHome = () => {
+    history('/dashboard');
+  };
+
+  const goToHomeBar = () => {
+    history('/dashboard');
+  };
+
   const goToUser = () => {
-    history('/dashboard/users');
+    history('users');
+  };
+  const goToVehicles = () => {
+    history('vehicles');
+  };
+  const goToMaterials = () => {
+    history('materials');
+  };
+  const goToOrders = () => {
+    history('orders');
+  };
+  const goToWorkTypes = () => {
+    history('work-types');
   };
 
   const handleDrawerOpen = () => {
@@ -150,12 +162,14 @@ export default function AppContainer() {
             />
           </Search>
           <Typography
+            style={{ cursor: 'pointer' }}
             variant="h6"
             noWrap
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            onClick={() => goToHomeBar('Inicio')}
           >
-            Lubriservicios del Norte SAS
+            Lubriservicios del Norte S.A.S
 
           </Typography>
 
@@ -205,6 +219,16 @@ export default function AppContainer() {
           </DrawerHeader>
           <Divider />
           <List style={{ backgroundColor: '#f5f70f' }}>
+
+            <ListItem disablePadding>
+              <ListItemButton onClick={() => goToHome('Inicio')}>
+                <ListItemIcon>
+                  <HomeIcon />
+                </ListItemIcon>
+                <ListItemText primary="Inicio" />
+              </ListItemButton>
+            </ListItem>
+
             <ListItem disablePadding>
               <ListItemButton onClick={() => goToUser('Usuarios')}>
                 <ListItemIcon>
@@ -215,7 +239,7 @@ export default function AppContainer() {
             </ListItem>
 
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={() => goToVehicles('Vehiculos')}>
                 <ListItemIcon>
                   <CarRepairIcon />
                 </ListItemIcon>
@@ -224,7 +248,7 @@ export default function AppContainer() {
             </ListItem>
 
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={() => goToMaterials('Materiales')}>
                 <ListItemIcon>
                   <InventoryIcon />
                 </ListItemIcon>
@@ -233,7 +257,7 @@ export default function AppContainer() {
             </ListItem>
 
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={() => goToOrders('Ordenes')}>
                 <ListItemIcon>
                   <PlaylistAddIcon />
                 </ListItemIcon>
@@ -242,7 +266,7 @@ export default function AppContainer() {
             </ListItem>
 
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton onClick={() => goToWorkTypes('Tipos de trabajo')}>
                 <ListItemIcon>
                   <HomeRepairServiceIcon />
                 </ListItemIcon>

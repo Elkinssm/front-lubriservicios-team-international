@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Accordion, AccordionDetails, AccordionSummary,
+  Grid,
   Tooltip, Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -10,24 +11,24 @@ import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import * as IdKey from 'short-uuid';
 import { headers } from './models';
-import { deleteMaterials, getAllMaterials, updateMaterials } from '../../actions/material-action';
+import { deleteOrders, getAllOrders, updateOrders } from '../../actions/order-action';
 
-export default function MaterialAccordion() {
-  const [materials, setMaterials] = useState([]);
+export default function OrderAccordion() {
+  const [orders, setOrders] = useState([]);
   const id = IdKey.generate();
 
   useEffect(() => {
-    const allMaterials = async () => {
-      const response = await getAllMaterials();
+    const allOrders = async () => {
+      const response = await getAllOrders();
       console.log(response.data);
-      setMaterials(response.data);
+      setOrders(response.data);
     };
-    allMaterials();
+    allOrders();
   }, []);
 
   const onEdit = () => {
     const updateUserAsync = async () => {
-      const response = await updateMaterials(id);
+      const response = await updateOrders(id);
       console.log(response.data);
     };
     updateUserAsync();
@@ -35,7 +36,7 @@ export default function MaterialAccordion() {
 
   const onDelete = (id) => {
     const deleteUserAsync = async () => {
-      const response = await deleteMaterials(id);
+      const response = await deleteOrders(id);
       console.log(response.data);
     };
     deleteUserAsync();
@@ -63,8 +64,8 @@ export default function MaterialAccordion() {
   return (
 
     <>
-      <Typography variant="h5">Listado de materiales</Typography>
-      {materials.map((material) => (
+      <Typography variant="h5">Listado de ordenes</Typography>
+      {orders.map((order) => (
         <Accordion
           style={{
             borderTopLeftRadius: '0px',
@@ -85,7 +86,7 @@ export default function MaterialAccordion() {
                   {header.title}
                 </Typography>
                 <Typography>
-                  {getValueByKey(material, header)}
+                  {getValueByKey(order, header)}
                 </Typography>
               </div>
             ))}
@@ -97,7 +98,7 @@ export default function MaterialAccordion() {
 
               <Tooltip title="Editar" arrow placement="top">
                 <EditIcon
-                  onClick={() => onEdit(material.id)}
+                  onClick={() => onEdit(order.id)}
                 />
               </Tooltip>
 
@@ -105,7 +106,7 @@ export default function MaterialAccordion() {
 
               <Tooltip title="Anular" arrow placement="top">
                 <DeleteIcon
-                  onClick={() => onDelete(material.id)}
+                  onClick={() => onDelete(order.id)}
                 />
               </Tooltip>
 
@@ -114,7 +115,7 @@ export default function MaterialAccordion() {
           {/* <AccordionDetails>
             <div>
               <Grid container spacing={3}>
-                {material.vehicle.map((car) => (
+                {order.vehicle.map((car1) => (
                   <Grid item xs={2}>
                     <Typography>
                       Placa
@@ -130,6 +131,8 @@ export default function MaterialAccordion() {
                     </Typography>
                   </Grid>
                 ))}
+
+                <Grid item xs={2} />
 
               </Grid>
             </div>
