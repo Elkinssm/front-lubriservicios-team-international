@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Accordion, AccordionDetails, AccordionSummary,
+  Button,
   Tooltip, Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -9,6 +10,7 @@ import { ExpandMoreOutlined } from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import * as IdKey from 'short-uuid';
+import { Link } from 'react-router-dom';
 import { headers } from './models';
 import { deleteMaterials, getAllMaterials, updateMaterials } from '../../actions/material-action';
 
@@ -64,6 +66,13 @@ export default function MaterialAccordion() {
 
     <>
       <Typography variant="h5">Listado de materiales</Typography>
+      <div style={{ textAlign: 'end' }}>
+        <Link to="/dashboard/create-material">
+          <Button variant="contained" color="success">
+            Crear
+          </Button>
+        </Link>
+      </div>
       {materials.map((material) => (
         <Accordion
           style={{
@@ -72,6 +81,7 @@ export default function MaterialAccordion() {
             borderBottomLeftRadius: '0px',
             borderBottomRightRadius: '0px',
             marginTop: '20px',
+            marginLeft: '15px',
           }}
         >
           <AccordionSummary
@@ -80,23 +90,39 @@ export default function MaterialAccordion() {
             expandIcon={<ExpandMoreOutlined />}
           >
             {headers.initialHeaders.map((header) => (
-              <div>
-                <Typography>
+              <div style={{ flexBasis: '39.6%' }}>
+                <Typography style={{ fontSize: 14 }}>
                   {header.title}
                 </Typography>
-                <Typography>
+                <Typography
+                  style={{
+                    fontSize: 12,
+                    color: '#08090b',
+                  }}
+                >
                   {getValueByKey(material, header)}
                 </Typography>
               </div>
             ))}
-            <div>
+            <div style={{ flexBasis: '24%', paddingTop: 8 }}>
               <Tooltip title="Ver detalle" arrow placement="top">
-                <VisibilityIcon />
+                <VisibilityIcon
+                  style={{
+                    verticalAlign: 'bottom',
+                    height: 20,
+                    width: 20,
+                  }}
+                />
               </Tooltip>
               &nbsp;&nbsp;
 
               <Tooltip title="Editar" arrow placement="top">
                 <EditIcon
+                  style={{
+                    verticalAlign: 'bottom',
+                    height: 20,
+                    width: 20,
+                  }}
                   onClick={() => onEdit(material.id)}
                 />
               </Tooltip>
@@ -105,6 +131,11 @@ export default function MaterialAccordion() {
 
               <Tooltip title="Anular" arrow placement="top">
                 <DeleteIcon
+                  style={{
+                    verticalAlign: 'bottom',
+                    height: 20,
+                    width: 20,
+                  }}
                   onClick={() => onDelete(material.id)}
                 />
               </Tooltip>

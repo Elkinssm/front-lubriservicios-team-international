@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Accordion, AccordionDetails, AccordionSummary,
+  Button,
   Grid,
   Tooltip, Typography,
 } from '@mui/material';
@@ -10,6 +11,7 @@ import { ExpandMoreOutlined } from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import * as IdKey from 'short-uuid';
+import { Link } from 'react-router-dom';
 import { deleteUsers, getAllUsers, updateUsers } from '../../actions/user-action';
 import { headers } from './models';
 
@@ -65,6 +67,13 @@ export default function UserAccordion() {
 
     <>
       <Typography variant="h5">Listado de usuarios</Typography>
+      <div style={{ textAlign: 'end' }}>
+        <Link to="/register">
+          <Button variant="contained" color="success" style={{ decoration: 'none' }}>
+            Crear
+          </Button>
+        </Link>
+      </div>
       {users.map((user) => (
         <Accordion
           style={{
@@ -73,6 +82,7 @@ export default function UserAccordion() {
             borderBottomLeftRadius: '0px',
             borderBottomRightRadius: '0px',
             marginTop: '20px',
+            marginLeft: '15px',
           }}
         >
           <AccordionSummary
@@ -81,28 +91,49 @@ export default function UserAccordion() {
             expandIcon={<ExpandMoreOutlined />}
           >
             {headers.initialHeaders.map((header) => (
-              <div>
-                <Typography>
+              <div style={{ flexBasis: '39.6%' }}>
+                <Typography style={{ fontSize: 14 }}>
                   {header.title}
                 </Typography>
-                <Typography>
+                <Typography
+                  style={{
+                    fontSize: 12,
+                    color: '#08090b',
+                  }}
+                >
                   {getValueByKey(user, header)}
                 </Typography>
               </div>
             ))}
-            <div>
+            <div style={{ flexBasis: '24%', paddingTop: 8 }}>
               <Tooltip title="Ver detalle" arrow placement="top">
-                <VisibilityIcon />
+                <VisibilityIcon
+                  style={{
+                    verticalAlign: 'bottom',
+                    height: 20,
+                    width: 20,
+                  }}
+                />
               </Tooltip>
               &nbsp;&nbsp;
               <Tooltip title="Editar" arrow placement="top">
                 <EditIcon
+                  style={{
+                    verticalAlign: 'bottom',
+                    height: 20,
+                    width: 20,
+                  }}
                   onClick={() => onEdit(user.id)}
                 />
               </Tooltip>
               &nbsp;&nbsp;
               <Tooltip title="Anular" arrow placement="top">
                 <DeleteIcon
+                  style={{
+                    verticalAlign: 'bottom',
+                    height: 20,
+                    width: 20,
+                  }}
                   onClick={() => onDelete(user.id)}
                 />
               </Tooltip>
@@ -113,31 +144,35 @@ export default function UserAccordion() {
             <div>
               <Grid container spacing={3}>
                 {user.vehicle.map((car) => (
-                  <Grid item xs={2}>
-                    <Typography>
-                      Placa
-                    </Typography>
-                    <Typography>
-                      {car.plate}
-                    </Typography>
-                    <Typography>
-                      Marca
-                    </Typography>
-                    <Typography>
-                      {car.brand}
-                    </Typography>
+                  <Grid item xs={2} style={{ display: 'flex' }}>
+                    <div style={{ flexBasis: '30%', marginLeft: 55 }}>
+                      <Typography style={{ fontSize: 14 }}>
+                        Placa
+                      </Typography>
+                      <Typography
+                        style={{
+                          fontSize: 12,
+                          color: '#08090b',
+                        }}
+                      >
+                        {car.plate}
+                      </Typography>
+                    </div>
+                    <div style={{ flexBasis: '30%', marginLeft: 110 }}>
+                      <Typography style={{ fontSize: 14 }}>
+                        Marca
+                      </Typography>
+                      <Typography
+                        style={{
+                          fontSize: 12,
+                          color: '#08090b',
+                        }}
+                      >
+                        {car.brand}
+                      </Typography>
+                    </div>
                   </Grid>
                 ))}
-
-                <Grid item xs={2}>
-                  {/* <BorderGreenButton onClick={() => onPublish(data.id)}>
-              Publicar Vacante
-            </BorderGreenButton> */}
-                  {/* <BorderGreenButton onClick={onShowForm}>
-            Publicar Vacante
-          </BorderGreenButton> */}
-                </Grid>
-
               </Grid>
             </div>
           </AccordionDetails>

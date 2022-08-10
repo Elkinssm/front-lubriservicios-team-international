@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Accordion, AccordionDetails, AccordionSummary,
+  Button,
   Grid,
   Tooltip, Typography,
 } from '@mui/material';
@@ -10,6 +11,7 @@ import { ExpandMoreOutlined } from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import * as IdKey from 'short-uuid';
+import { Link } from 'react-router-dom';
 import { headers } from './models';
 import { deleteOrders, getAllOrders, updateOrders } from '../../actions/order-action';
 
@@ -65,6 +67,13 @@ export default function OrderAccordion() {
 
     <>
       <Typography variant="h5">Listado de ordenes</Typography>
+      <div style={{ textAlign: 'end' }}>
+        <Link to="/dashboard/create-order">
+          <Button variant="contained" color="success">
+            Crear
+          </Button>
+        </Link>
+      </div>
       {orders.map((order) => (
         <Accordion
           style={{
@@ -73,6 +82,7 @@ export default function OrderAccordion() {
             borderBottomLeftRadius: '0px',
             borderBottomRightRadius: '0px',
             marginTop: '20px',
+            marginLeft: '15px',
           }}
         >
           <AccordionSummary
@@ -81,23 +91,39 @@ export default function OrderAccordion() {
             expandIcon={<ExpandMoreOutlined />}
           >
             {headers.initialHeaders.map((header) => (
-              <div>
-                <Typography>
+              <div style={{ flexBasis: '40%' }}>
+                <Typography style={{ fontSize: 14 }}>
                   {header.title}
                 </Typography>
-                <Typography>
+                <Typography
+                  style={{
+                    fontSize: 12,
+                    color: '#08090b',
+                  }}
+                >
                   {getValueByKey(order, header)}
                 </Typography>
               </div>
             ))}
-            <div>
+            <div style={{ flexBasis: '28%', paddingTop: 8 }}>
               <Tooltip title="Ver detalle" arrow placement="top">
-                <VisibilityIcon />
+                <VisibilityIcon
+                  style={{
+                    verticalAlign: 'bottom',
+                    height: 20,
+                    width: 20,
+                  }}
+                />
               </Tooltip>
               &nbsp;&nbsp;
 
               <Tooltip title="Editar" arrow placement="top">
                 <EditIcon
+                  style={{
+                    verticalAlign: 'bottom',
+                    height: 20,
+                    width: 20,
+                  }}
                   onClick={() => onEdit(order.id)}
                 />
               </Tooltip>
@@ -106,6 +132,11 @@ export default function OrderAccordion() {
 
               <Tooltip title="Anular" arrow placement="top">
                 <DeleteIcon
+                  style={{
+                    verticalAlign: 'bottom',
+                    height: 20,
+                    width: 20,
+                  }}
                   onClick={() => onDelete(order.id)}
                 />
               </Tooltip>

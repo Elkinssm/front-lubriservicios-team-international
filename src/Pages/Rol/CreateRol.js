@@ -33,7 +33,7 @@ export default function CreateRol() {
             'Rol creado correctamente',
             'success',
           );
-          history('/');
+          history('/dashboard/rols');
         } else if (response.status === 400 || response.code === 400) {
           Swal.fire(
             'Acceso',

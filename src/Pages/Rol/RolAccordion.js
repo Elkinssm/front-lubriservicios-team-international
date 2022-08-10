@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Accordion, AccordionDetails, AccordionSummary,
+  Button,
   Grid,
   Tooltip, Typography,
 } from '@mui/material';
@@ -10,7 +11,7 @@ import { ExpandMoreOutlined } from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import * as IdKey from 'short-uuid';
-import { getAllByRole } from '@testing-library/react';
+import { Link } from 'react-router-dom';
 import { headers } from './models';
 import { deleteRols, getRols, updateRols } from '../../actions/rol-action';
 
@@ -66,6 +67,13 @@ export default function RolAccordion() {
 
     <>
       <Typography variant="h5">Listado de roles</Typography>
+      <div style={{ textAlign: 'end' }}>
+        <Link to="/dashboard/create-rol">
+          <Button variant="contained" color="success">
+            Crear
+          </Button>
+        </Link>
+      </div>
       {rols.map((rol) => (
         <Accordion
           style={{
@@ -74,6 +82,7 @@ export default function RolAccordion() {
             borderBottomLeftRadius: '0px',
             borderBottomRightRadius: '0px',
             marginTop: '20px',
+            marginLeft: '15px',
           }}
         >
           <AccordionSummary
@@ -82,23 +91,39 @@ export default function RolAccordion() {
             expandIcon={<ExpandMoreOutlined />}
           >
             {headers.initialHeaders.map((header) => (
-              <div>
-                <Typography>
+              <div style={{ flexBasis: '40%' }}>
+                <Typography variant="h6">
                   {header.title}
                 </Typography>
-                <Typography>
+                <Typography
+                  style={{
+                    color: '#08090b',
+                  }}
+                  variant="subtitle1"
+                >
                   {getValueByKey(rol, header)}
                 </Typography>
               </div>
             ))}
-            <div>
+            <div style={{ flexBasis: '28%', paddingTop: 8 }}>
               <Tooltip title="Ver detalle" arrow placement="top">
-                <VisibilityIcon />
+                <VisibilityIcon
+                  style={{
+                    verticalAlign: 'bottom',
+                    height: 20,
+                    width: 20,
+                  }}
+                />
               </Tooltip>
               &nbsp;&nbsp;
 
               <Tooltip title="Editar" arrow placement="top">
                 <EditIcon
+                  style={{
+                    verticalAlign: 'bottom',
+                    height: 20,
+                    width: 20,
+                  }}
                   onClick={() => onEdit(rol.id)}
                 />
               </Tooltip>
@@ -107,6 +132,11 @@ export default function RolAccordion() {
 
               <Tooltip title="Anular" arrow placement="top">
                 <DeleteIcon
+                  style={{
+                    verticalAlign: 'bottom',
+                    height: 20,
+                    width: 20,
+                  }}
                   onClick={() => onDelete(rol.id)}
                 />
               </Tooltip>
