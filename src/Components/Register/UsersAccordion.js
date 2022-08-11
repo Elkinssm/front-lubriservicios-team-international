@@ -92,14 +92,14 @@ export default function UserAccordion() {
           >
             {headers.initialHeaders.map((header) => (
               <div style={{ flexBasis: '39.6%' }}>
-                <Typography style={{ fontSize: 14 }}>
+                <Typography variant="h6">
                   {header.title}
                 </Typography>
                 <Typography
                   style={{
-                    fontSize: 12,
                     color: '#08090b',
                   }}
+                  variant="subtitle1"
                 >
                   {getValueByKey(user, header)}
                 </Typography>
@@ -146,27 +146,27 @@ export default function UserAccordion() {
                 {user.vehicle.map((car) => (
                   <Grid item xs={2} style={{ display: 'flex' }}>
                     <div style={{ flexBasis: '30%', marginLeft: 55 }}>
-                      <Typography style={{ fontSize: 14 }}>
+                      <Typography variant="h6">
                         Placa
                       </Typography>
                       <Typography
                         style={{
-                          fontSize: 12,
                           color: '#08090b',
                         }}
+                        variant="subtitle1"
                       >
                         {car.plate}
                       </Typography>
                     </div>
                     <div style={{ flexBasis: '30%', marginLeft: 110 }}>
-                      <Typography style={{ fontSize: 14 }}>
+                      <Typography variant="h6">
                         Marca
                       </Typography>
                       <Typography
                         style={{
-                          fontSize: 12,
                           color: '#08090b',
                         }}
+                        variant="subtitle1"
                       >
                         {car.brand}
                       </Typography>

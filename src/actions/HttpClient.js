@@ -1,3 +1,5 @@
+/* eslint-disable no-param-reassign */
+/* eslint-disable camelcase */
 import axios from 'axios';
 
 axios.defaults.baseURL = '';

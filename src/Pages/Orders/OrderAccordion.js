@@ -92,14 +92,14 @@ export default function OrderAccordion() {
           >
             {headers.initialHeaders.map((header) => (
               <div style={{ flexBasis: '40%' }}>
-                <Typography style={{ fontSize: 14 }}>
+                <Typography variant="h6">
                   {header.title}
                 </Typography>
                 <Typography
                   style={{
-                    fontSize: 12,
                     color: '#08090b',
                   }}
+                  variant="subtitle1"
                 >
                   {getValueByKey(order, header)}
                 </Typography>

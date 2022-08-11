@@ -57,7 +57,8 @@ export default function CreateVehicle() {
             'success',
           );
           history('/dashboard/vehicles');
-        } else if (response.status === 400 || response.code === 400) {
+        } else if (response.status === 400 || response.code === 400
+          || response.status === 409 || response.code === 409) {
           Swal.fire(
             'Acceso',
             'Por favor valide los datos ingresados',
