@@ -36,7 +36,7 @@ export default function CreateMaterial() {
             'Material creado correctamente',
             'success',
           );
-          history('/materials');
+          history('/dashboard/materials');
         } else if (response.status === 400 || response.code === 400) {
           Swal.fire(
             'Acceso',

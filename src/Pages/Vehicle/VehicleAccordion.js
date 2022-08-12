@@ -84,6 +84,9 @@ export default function VehicleAccordion() {
             borderBottomRightRadius: '0px',
             marginTop: '20px',
             marginLeft: '15px',
+            borderLeftStyle: 'solid',
+            borderLeftColor: '#F5A638',
+            borderLeftWidth: '8px',
           }}
         >
           <AccordionSummary

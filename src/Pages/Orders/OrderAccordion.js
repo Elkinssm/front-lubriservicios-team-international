@@ -83,6 +83,9 @@ export default function OrderAccordion() {
             borderBottomRightRadius: '0px',
             marginTop: '20px',
             marginLeft: '15px',
+            borderLeftStyle: 'solid',
+            borderLeftColor: '#00EBFF',
+            borderLeftWidth: '8px',
           }}
         >
           <AccordionSummary

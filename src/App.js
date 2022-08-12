@@ -20,6 +20,7 @@ import WorkTypeAccordion from './Pages/WorkType/WorkTypeAccordion';
 import RolAccordion from './Pages/Rol/RolAccordion';
 // import SegmentChartGrandient from './Pages/Dashboard/SegmentChartGradient';
 import LineChart from './Pages/Dashboard/LineChart';
+import Home from './Pages/Dashboard/Home';
 // import SegmentChart from './Pages/Dashboard/SegmentChart';
 // import BarChart from './Pages/Dashboard/BarChar';
 
@@ -34,7 +35,7 @@ function App() {
           <Route exact path="/register" element={<Register />} />
 
           <Route exact path="/dashboard/*" element={<Dashboard />}>
-            <Route index element={<LineChart />} />
+            <Route index element={<Home />} />
             <Route exact path="create-vehicle" element={<CreateVehicle />} />
             <Route exact path="create-material" element={<CreateMaterial />} />
             <Route exact path="create-order" element={<CreateOrder />} />

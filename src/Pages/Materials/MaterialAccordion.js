@@ -82,6 +82,9 @@ export default function MaterialAccordion() {
             borderBottomRightRadius: '0px',
             marginTop: '20px',
             marginLeft: '15px',
+            borderLeftStyle: 'solid',
+            borderLeftColor: '#F56607',
+            borderLeftWidth: '8px',
           }}
         >
           <AccordionSummary

@@ -75,7 +75,7 @@ export default function CreateOrder() {
             'success',
           );
           console.log(response);
-          history(`/create-order-work-type/${response.data.id}`);
+          history(`/dashboard/create-order-work-type/${response.data.id}`);
         } else if (response.status === 400 || response.code === 400) {
           Swal.fire(
             'Acceso',

@@ -83,6 +83,9 @@ export default function WorkTypeAccordion() {
             borderBottomRightRadius: '0px',
             marginTop: '20px',
             marginLeft: '15px',
+            borderLeftStyle: 'solid',
+            borderLeftColor: '#634F3E',
+            borderLeftWidth: '8px',
 
           }}
         >

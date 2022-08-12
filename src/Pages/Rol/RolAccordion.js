@@ -83,6 +83,9 @@ export default function RolAccordion() {
             borderBottomRightRadius: '0px',
             marginTop: '20px',
             marginLeft: '15px',
+            borderLeftStyle: 'solid',
+            borderLeftColor: '#FF1408',
+            borderLeftWidth: '8px',
           }}
         >
           <AccordionSummary

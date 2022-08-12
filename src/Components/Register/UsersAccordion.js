@@ -83,6 +83,9 @@ export default function UserAccordion() {
             borderBottomRightRadius: '0px',
             marginTop: '20px',
             marginLeft: '15px',
+            borderLeftStyle: 'solid',
+            borderLeftColor: '#9C27B0',
+            borderLeftWidth: '8px',
           }}
         >
           <AccordionSummary

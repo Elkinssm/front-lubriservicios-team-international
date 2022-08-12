@@ -33,7 +33,7 @@ export default function CreateWorkType() {
             'Tipo de trabajo creado correctamente',
             'success',
           );
-          history('/work-types');
+          history('/dashboard/work-types');
         } else if (response.status === 400 || response.code === 400) {
           Swal.fire(
             'Acceso',
