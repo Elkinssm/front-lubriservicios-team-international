@@ -18,11 +18,8 @@ import VehicleAccordion from './Pages/Vehicle/VehicleAccordion';
 import OrderAccordion from './Pages/Orders/OrderAccordion';
 import WorkTypeAccordion from './Pages/WorkType/WorkTypeAccordion';
 import RolAccordion from './Pages/Rol/RolAccordion';
-// import SegmentChartGrandient from './Pages/Dashboard/SegmentChartGradient';
-import LineChart from './Pages/Dashboard/LineChart';
 import Home from './Pages/Dashboard/Home';
-// import SegmentChart from './Pages/Dashboard/SegmentChart';
-// import BarChart from './Pages/Dashboard/BarChar';
+import DialogRol from './Pages/Rol/DialogRol';
 
 function App() {
   return (
@@ -53,6 +50,8 @@ function App() {
             <Route exact path="orders" element={<OrderAccordion />} />
             <Route exact path="work-types" element={<WorkTypeAccordion />} />
             <Route exact path="rols" element={<RolAccordion />} />
+            <Route exact path="rols" element={<RolAccordion />} />
+            <Route exact path="update-rols" element={<DialogRol />} />
 
           </Route>
           <Route

@@ -53,10 +53,10 @@ export const updateUsers = (id, body) => new Promise((resolve, reject) => {
   const headers = {
     'Content-Type': 'application/json',
   };
-  HttpClient.put(
+  HttpClient.patch(
     `http://localhost:3000/api/lubrisernorte/v1/users/${id}`,
     body,
-    headers``,
+    headers,
   )
     .then((response) => {
       resolve(response);

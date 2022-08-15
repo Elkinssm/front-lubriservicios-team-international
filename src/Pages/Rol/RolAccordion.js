@@ -1,9 +1,8 @@
 /* eslint-disable no-debugger */
 import React, { useEffect, useState } from 'react';
 import {
-  Accordion, AccordionDetails, AccordionSummary,
+  Accordion, AccordionSummary,
   Button,
-  Grid,
   Tooltip, Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -13,10 +12,14 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import * as IdKey from 'short-uuid';
 import { Link } from 'react-router-dom';
 import { headers } from './models';
-import { deleteRols, getRols, updateRols } from '../../actions/rol-action';
+import { deleteRols, getRols } from '../../actions/rol-action';
+import DialogRol from './DialogRol';
 
 export default function RolAccordion() {
   const [rols, setRols] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [rolToUpdate, setRolToUpdate] = useState(null);
+  const [refresh, setRefresh] = useState(false);
   const id = IdKey.generate();
 
   useEffect(() => {
@@ -26,20 +29,18 @@ export default function RolAccordion() {
       setRols(response.data);
     };
     allRols();
-  }, []);
+  }, [refresh]);
 
-  const onEdit = () => {
-    const updateUserAsync = async () => {
-      const response = await updateRols(id);
-      console.log(response.data);
-    };
-    updateUserAsync();
+  const onOpenDialog = (rolId) => {
+    setRolToUpdate(rolId);
+    setOpenDialog(true);
   };
 
-  const onDelete = (id) => {
+  const onDelete = (rolId) => {
     const deleteUserAsync = async () => {
-      const response = await deleteRols(id);
+      const response = await deleteRols(rolId);
       console.log(response.data);
+      setRefresh(!refresh);
     };
     deleteUserAsync();
   };
@@ -66,6 +67,16 @@ export default function RolAccordion() {
   return (
 
     <>
+      {openDialog
+      && (
+      <DialogRol
+        setOpenDialog={setOpenDialog}
+        openDialog={openDialog}
+        rolToUpdate={rolToUpdate}
+        setRefresh={setRefresh}
+        refresh={refresh}
+      />
+      )}
       <Typography variant="h5">Listado de roles</Typography>
       <div style={{ textAlign: 'end' }}>
         <Link to="/dashboard/create-rol">
@@ -127,7 +138,7 @@ export default function RolAccordion() {
                     height: 20,
                     width: 20,
                   }}
-                  onClick={() => onEdit(rol.id)}
+                  onClick={() => onOpenDialog(rol.id)}
                 />
               </Tooltip>
 
@@ -146,31 +157,9 @@ export default function RolAccordion() {
 
             </div>
           </AccordionSummary>
-          {/* <AccordionDetails>
-            <div>
-              <Grid container spacing={3}>
-                {car.user.map((info) => (
-                  <Grid item xs={2}>
-                    <Typography>
-                      Nombre
-                    </Typography>
-                    <Typography>
-                      {info.name}
-                    </Typography>
-                    <Typography>
-                      Celular
-                    </Typography>
-                    <Typography>
-                      {info.cellPhone}
-                    </Typography>
-                  </Grid>
-                ))}
-
-              </Grid>
-            </div>
-          </AccordionDetails> */}
         </Accordion>
       ))}
+
     </>
   );
 }

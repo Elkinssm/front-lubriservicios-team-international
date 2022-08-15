@@ -74,10 +74,10 @@ export const updateRols = (id, body) => new Promise((resolve, reject) => {
   const headers = {
     'Content-Type': 'application/json',
   };
-  HttpClient.put(
+  HttpClient.patch(
     `http://localhost:3000/api/lubrisernorte/v1/rols/${id}`,
     body,
-    headers``,
+    headers,
   )
     .then((response) => {
       resolve(response);

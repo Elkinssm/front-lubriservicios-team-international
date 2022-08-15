@@ -77,10 +77,10 @@ export const updateOrderWorkTypes = (id, body) => new Promise((resolve, reject) 
   const headers = {
     'Content-Type': 'application/json',
   };
-  HttpClient.put(
+  HttpClient.patch(
     `http://localhost:3000/api/lubrisernorte/v1/order-work-types/${id}`,
     body,
-    headers``,
+    headers,
   )
     .then((response) => {
       resolve(response);
