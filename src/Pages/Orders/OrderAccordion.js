@@ -40,6 +40,7 @@ export default function OrderAccordion() {
     const deleteUserAsync = async () => {
       const response = await deleteOrders(orderId);
       console.log(response.data);
+      setRefresh(!refresh);
     };
     deleteUserAsync();
   };

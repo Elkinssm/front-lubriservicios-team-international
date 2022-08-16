@@ -204,7 +204,8 @@ export default function DialogOrder({
                   labelId="status"
                   id="status"
                   label="Estado"
-                  onChange={handleChangeStatusSelect}
+                  // onChange={handleChangeStatus}
+                  onChange={handleChange}
                   value={statusOrder}
                 >
                   {orderStatus.map((item) => <MenuItem value={item.key}>{item.value}</MenuItem>)}

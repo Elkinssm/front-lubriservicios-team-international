@@ -1,9 +1,8 @@
 /* eslint-disable no-debugger */
 import React, { useEffect, useState } from 'react';
 import {
-  Accordion, AccordionDetails, AccordionSummary,
+  Accordion, AccordionSummary,
   Button,
-  Grid,
   Tooltip, Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -13,10 +12,14 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import * as IdKey from 'short-uuid';
 import { Link } from 'react-router-dom';
 import { headers } from './models';
-import { deleteVehicles, getAllVehicles, updateVehicles } from '../../actions/vehicle-action';
+import { deleteVehicles, getAllVehicles } from '../../actions/vehicle-action';
+import DialogVehicle from './DialogVehicle';
 
 export default function VehicleAccordion() {
   const [vehicles, setVehicles] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [vehicleToUpdate, setVehicleToUpdate] = useState(null);
+  const [refresh, setRefresh] = useState(false);
   const id = IdKey.generate();
 
   useEffect(() => {
@@ -26,20 +29,18 @@ export default function VehicleAccordion() {
       setVehicles(response.data);
     };
     allVehicles();
-  }, []);
+  }, [refresh]);
 
-  const onEdit = () => {
-    const updateUserAsync = async () => {
-      const response = await updateVehicles(id);
-      console.log(response.data);
-    };
-    updateUserAsync();
+  const onOpenDialog = (vehicleId) => {
+    setVehicleToUpdate(vehicleId);
+    setOpenDialog(true);
   };
 
-  const onDelete = (id) => {
+  const onDelete = (vehicleId) => {
     const deleteUserAsync = async () => {
-      const response = await deleteVehicles(id);
+      const response = await deleteVehicles(vehicleId);
       console.log(response.data);
+      setRefresh(!refresh);
     };
     deleteUserAsync();
   };
@@ -66,6 +67,16 @@ export default function VehicleAccordion() {
   return (
 
     <>
+      {openDialog
+      && (
+      <DialogVehicle
+        setOpenDialog={setOpenDialog}
+        openDialog={openDialog}
+        vehicleToUpdate={vehicleToUpdate}
+        setRefresh={setRefresh}
+        refresh={refresh}
+      />
+      )}
       <Typography variant="h5">Listado de vehiculos</Typography>
       <div style={{ textAlign: 'end' }}>
         <Link to="/dashboard/create-vehicle" style={{ textDecoration: 'none' }}>
@@ -128,7 +139,7 @@ export default function VehicleAccordion() {
                     height: 20,
                     width: 20,
                   }}
-                  onClick={() => onEdit(car.id)}
+                  onClick={() => onOpenDialog(car.id)}
                 />
               </Tooltip>
 
