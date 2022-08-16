@@ -13,9 +13,13 @@ import * as IdKey from 'short-uuid';
 import { Link } from 'react-router-dom';
 import { headers } from './models';
 import { deleteMaterials, getAllMaterials, updateMaterials } from '../../actions/material-action';
+import DialogMaterial from './DialogMaterial';
 
 export default function MaterialAccordion() {
   const [materials, setMaterials] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [materialToUpdate, setMaterialToUpdate] = useState(null);
+  const [refresh, setRefresh] = useState(false);
   const id = IdKey.generate();
 
   useEffect(() => {
@@ -25,20 +29,18 @@ export default function MaterialAccordion() {
       setMaterials(response.data);
     };
     allMaterials();
-  }, []);
+  }, [refresh]);
 
-  const onEdit = () => {
-    const updateUserAsync = async () => {
-      const response = await updateMaterials(id);
-      console.log(response.data);
-    };
-    updateUserAsync();
+  const onOpenDialog = (materialId) => {
+    setMaterialToUpdate(materialId);
+    setOpenDialog(true);
   };
 
-  const onDelete = (id) => {
+  const onDelete = (materialId) => {
     const deleteUserAsync = async () => {
-      const response = await deleteMaterials(id);
+      const response = await deleteMaterials(materialId);
       console.log(response.data);
+      setRefresh(!refresh);
     };
     deleteUserAsync();
   };
@@ -65,6 +67,16 @@ export default function MaterialAccordion() {
   return (
 
     <>
+      {openDialog
+      && (
+      <DialogMaterial
+        setOpenDialog={setOpenDialog}
+        openDialog={openDialog}
+        materialToUpdate={materialToUpdate}
+        setRefresh={setRefresh}
+        refresh={refresh}
+      />
+      )}
       <Typography variant="h5">Listado de materiales</Typography>
       <div style={{ textAlign: 'end' }}>
         <Link to="/dashboard/create-material">
@@ -126,7 +138,7 @@ export default function MaterialAccordion() {
                     height: 20,
                     width: 20,
                   }}
-                  onClick={() => onEdit(material.id)}
+                  onClick={() => onOpenDialog(material.id)}
                 />
               </Tooltip>
 
