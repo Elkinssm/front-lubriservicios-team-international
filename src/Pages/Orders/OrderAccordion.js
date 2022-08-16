@@ -1,9 +1,8 @@
 /* eslint-disable no-debugger */
 import React, { useEffect, useState } from 'react';
 import {
-  Accordion, AccordionDetails, AccordionSummary,
+  Accordion, AccordionSummary,
   Button,
-  Grid,
   Tooltip, Typography,
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -13,10 +12,14 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import * as IdKey from 'short-uuid';
 import { Link } from 'react-router-dom';
 import { headers } from './models';
-import { deleteOrders, getAllOrders, updateOrders } from '../../actions/order-action';
+import { deleteOrders, getAllOrders } from '../../actions/order-action';
+import DialogOrder from './DialogOrder';
 
 export default function OrderAccordion() {
   const [orders, setOrders] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [orderToUpdate, setOrderToUpdate] = useState(null);
+  const [refresh, setRefresh] = useState(false);
   const id = IdKey.generate();
 
   useEffect(() => {
@@ -26,19 +29,16 @@ export default function OrderAccordion() {
       setOrders(response.data);
     };
     allOrders();
-  }, []);
+  }, [refresh]);
 
-  const onEdit = () => {
-    const updateUserAsync = async () => {
-      const response = await updateOrders(id);
-      console.log(response.data);
-    };
-    updateUserAsync();
+  const onOpenDialog = (orderId) => {
+    setOrderToUpdate(orderId);
+    setOpenDialog(true);
   };
 
-  const onDelete = (id) => {
+  const onDelete = (orderId) => {
     const deleteUserAsync = async () => {
-      const response = await deleteOrders(id);
+      const response = await deleteOrders(orderId);
       console.log(response.data);
     };
     deleteUserAsync();
@@ -66,6 +66,16 @@ export default function OrderAccordion() {
   return (
 
     <>
+      {openDialog
+      && (
+      <DialogOrder
+        setOpenDialog={setOpenDialog}
+        openDialog={openDialog}
+        orderToUpdate={orderToUpdate}
+        setRefresh={setRefresh}
+        refresh={refresh}
+      />
+      )}
       <Typography variant="h5">Listado de ordenes</Typography>
       <div style={{ textAlign: 'end' }}>
         <Link to="/dashboard/create-order">
@@ -127,12 +137,10 @@ export default function OrderAccordion() {
                     height: 20,
                     width: 20,
                   }}
-                  onClick={() => onEdit(order.id)}
+                  onClick={() => onOpenDialog(order.id)}
                 />
               </Tooltip>
-
               &nbsp;&nbsp;
-
               <Tooltip title="Anular" arrow placement="top">
                 <DeleteIcon
                   style={{
