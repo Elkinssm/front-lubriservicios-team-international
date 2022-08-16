@@ -8,6 +8,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Grid } from '@mui/material';
+import Swal from 'sweetalert2';
 import { getMaterialById, updateMaterials } from '../../actions/material-action';
 
 export default function DialogMaterial({
@@ -64,7 +65,11 @@ export default function DialogMaterial({
         name: nameMaterial, description, reference, category, brand,
       });
       if (dataUpdate.status >= 200 && dataUpdate.status <= 399) {
-        alert('ok');
+        Swal.fire(
+          'Registro',
+          'Material actualizado correctamente',
+          'success',
+        );
         setOpenDialog(false);
         setRefresh(!refresh);
       }

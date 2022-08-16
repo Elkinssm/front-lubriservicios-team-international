@@ -13,35 +13,36 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import * as IdKey from 'short-uuid';
 import { Link } from 'react-router-dom';
 import { headers } from './models';
-import { deleteWorkType, getAllWorkTypes, updateWorkTypes } from '../../actions/work-type-action';
+import { deleteWorkType, getAllWorkTypes } from '../../actions/work-type-action';
+import DialogWorkType from './DialogWorkType';
 
 export default function WorkTypeAccordion() {
   const [workTypes, setWorkTypes] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [workTypeToUpdate, setWorkTypeToUpdate] = useState(null);
+  const [refresh, setRefresh] = useState(false);
   const id = IdKey.generate();
 
   useEffect(() => {
-    const allVehicles = async () => {
+    const allworkTypes = async () => {
       const response = await getAllWorkTypes();
       console.log(response.data);
       setWorkTypes(response.data);
     };
-    allVehicles();
-  }, []);
+    allworkTypes();
+  }, [refresh]);
 
-  const onEdit = () => {
-    const updateUserAsync = async () => {
-      const response = await updateWorkTypes(id);
-      console.log(response.data);
-    };
-    updateUserAsync();
+  const onOpenDialog = (workTypeId) => {
+    setWorkTypeToUpdate(workTypeId);
+    setOpenDialog(true);
   };
 
-  const onDelete = (id) => {
-    const deleteUserAsync = async () => {
-      const response = await deleteWorkType(id);
+  const onDelete = (workTypeId) => {
+    const deleteWorkTypeAsync = async () => {
+      const response = await deleteWorkType(workTypeId);
       console.log(response.data);
     };
-    deleteUserAsync();
+    deleteWorkTypeAsync();
   };
 
   const getValueByKey = (object, header) => {
@@ -66,6 +67,16 @@ export default function WorkTypeAccordion() {
   return (
 
     <>
+      {openDialog
+      && (
+      <DialogWorkType
+        setOpenDialog={setOpenDialog}
+        openDialog={openDialog}
+        workTypeToUpdate={workTypeToUpdate}
+        setRefresh={setRefresh}
+        refresh={refresh}
+      />
+      )}
       <Typography variant="h5">Listado de ordenes de trabajo</Typography>
       <div style={{ textAlign: 'end' }}>
         <Link to="/dashboard/create-work-type">
@@ -128,7 +139,7 @@ export default function WorkTypeAccordion() {
                     height: 20,
                     width: 20,
                   }}
-                  onClick={() => onEdit(worktype.id)}
+                  onClick={() => onOpenDialog(worktype.id)}
                 />
               </Tooltip>
 

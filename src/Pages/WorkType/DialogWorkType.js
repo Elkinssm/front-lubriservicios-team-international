@@ -9,20 +9,20 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { Grid } from '@mui/material';
 import Swal from 'sweetalert2';
-import { getRolById, updateRols } from '../../actions/rol-action';
+import { getWorkTypesById, updateWorkTypes } from '../../actions/work-type-action';
 
-export default function DialogRol({
-  setOpenDialog, openDialog, rolToUpdate, setRefresh, refresh,
+export default function DialogWorkType({
+  setOpenDialog, openDialog, workTypeToUpdate, setRefresh, refresh,
 }) {
-  const [rolInfo, setRolInfo] = useState({});
+  const [workTypeInfo, setWorkTypeInfo] = useState({});
   // DAta a enviar
-  const [nameRol, setNameRol] = useState('');
+  const [nameWorkType, setNameWorkType] = useState('');
   const [description, setDescription] = useState('');
   //
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (name === 'name') {
-      setNameRol(value);
+      setNameWorkType(value);
     }
     if (name === 'description') {
       setDescription(value);
@@ -30,14 +30,14 @@ export default function DialogRol({
   };
 
   useEffect(() => {
-    const getRolByIdAsync = async () => {
-      const rolData = await getRolById(rolToUpdate);
+    const getworkTypeByIdAsync = async () => {
+      const workTypeData = await getWorkTypesById(workTypeToUpdate);
       debugger;
-      setRolInfo(rolData.data);
-      setNameRol(rolData.data.name);
-      setDescription(rolData.data.description);
+      setWorkTypeInfo(workTypeData.data);
+      setNameWorkType(workTypeData.data.name);
+      setDescription(workTypeData.data.description);
     };
-    getRolByIdAsync();
+    getworkTypeByIdAsync();
   }, []);
 
   const handleClose = () => {
@@ -45,19 +45,22 @@ export default function DialogRol({
   };
 
   const handleSave = () => {
-    const updateRolsAsync = async () => {
-      const dataUpdate = await updateRols(rolToUpdate, { name: nameRol, description });
+    const updateWorkTypeAsync = async () => {
+      const dataUpdate = await updateWorkTypes(
+        workTypeToUpdate,
+        { name: nameWorkType, description },
+      );
       if (dataUpdate.status >= 200 && dataUpdate.status <= 399) {
         Swal.fire(
           'Registro',
-          'Rol actualizado correctamente',
+          'Tipo de trabajo actualizado correctamente',
           'success',
         );
         setOpenDialog(false);
         setRefresh(!refresh);
       }
     };
-    updateRolsAsync();
+    updateWorkTypeAsync();
   };
 
   return (
@@ -79,7 +82,7 @@ export default function DialogRol({
                 required
                 fullWidth
                 InputLabelProps={{ shrink: true }}
-                value={nameRol}
+                value={nameWorkType}
                 onChange={handleChange}
                 id="name"
                 label="Nombre"

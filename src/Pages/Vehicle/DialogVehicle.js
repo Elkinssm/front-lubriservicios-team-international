@@ -10,6 +10,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {
   FormControl, Grid, InputLabel, MenuItem, Select,
 } from '@mui/material';
+import Swal from 'sweetalert2';
 import { getAllUsers } from '../../actions/user-action';
 import { getVehicleById, updateVehicles } from '../../actions/vehicle-action';
 
@@ -86,7 +87,11 @@ export default function DialogVehicle({
         plate, brand, model, serialChasis, serialEngine, color, userId,
       });
       if (dataUpdate.status >= 200 && dataUpdate.status <= 399) {
-        alert('ok');
+        Swal.fire(
+          'Registro',
+          'Vehiculo actualizado correctamente',
+          'success',
+        );
         setOpenDialog(false);
         setRefresh(!refresh);
       }

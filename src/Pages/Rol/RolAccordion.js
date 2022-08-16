@@ -37,12 +37,12 @@ export default function RolAccordion() {
   };
 
   const onDelete = (rolId) => {
-    const deleteUserAsync = async () => {
+    const deleteRolAsync = async () => {
       const response = await deleteRols(rolId);
       console.log(response.data);
       setRefresh(!refresh);
     };
-    deleteUserAsync();
+    deleteRolAsync();
   };
 
   const getValueByKey = (object, header) => {

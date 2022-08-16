@@ -10,6 +10,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import {
   FormControl, Grid, InputLabel, MenuItem, Select,
 } from '@mui/material';
+import Swal from 'sweetalert2';
 import { getOrderById, updateOrders } from '../../actions/order-action';
 import { orderStatus } from './models';
 
@@ -97,7 +98,11 @@ export default function DialogOrder({
         diagnostic,
       });
       if (dataUpdate.status >= 200 && dataUpdate.status <= 399) {
-        alert('ok');
+        Swal.fire(
+          'Registro',
+          'Orden actualizada correctamente',
+          'success',
+        );
         setOpenDialog(false);
         setRefresh(!refresh);
       }
