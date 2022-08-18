@@ -39,14 +39,19 @@ const options = {
     legend: {
       display: true,
     },
+    title: {
+      display: true,
+      text: 'Materiales',
+    },
   },
+
 };
 
 export default function BarChart() {
   const data = useMemo(() => ({
     datasets: [
       {
-        label: 'Mis datos',
+        label: 'Materiales',
         data: scores,
         tension: 0.3,
         borderColor: 'rgb(75,192,192)',

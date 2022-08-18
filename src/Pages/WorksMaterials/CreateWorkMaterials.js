@@ -3,7 +3,6 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -108,7 +107,6 @@ export default function CreateWorkMaterials() {
                   id="quantity"
                   label="Cantidad"
                   name="quantity"
-                  // autoComplete="family-name"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -118,7 +116,7 @@ export default function CreateWorkMaterials() {
                   id="materialId"
                   label="Material"
                   name="materialId"
-                  // autoComplete="email"
+
                 />
               </Grid>
               <Grid item xs={12}>
@@ -126,9 +124,9 @@ export default function CreateWorkMaterials() {
                   required
                   fullWidth
                   id="workTypeId"
-                  label="Tipo de traajo"
+                  label="Tipo de trabajo"
                   name="workTypeId"
-                  // autoComplete="email"
+
                 />
               </Grid>
             </Grid>
@@ -140,13 +138,6 @@ export default function CreateWorkMaterials() {
             >
               Crear material de trabajo
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
       </Container>

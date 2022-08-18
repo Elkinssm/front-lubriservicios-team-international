@@ -39,7 +39,6 @@ function Copyright() {
 const theme = createTheme();
 
 export default function SignIn() {
-  // const MySwal = withReactContent(Swal);
   const history = useNavigate();
 
   const handleSubmit = (event) => {

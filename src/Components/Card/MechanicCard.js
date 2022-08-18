@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
-import background from '../images/Morado.svg';
+import BuildCircleIcon from '@mui/icons-material/BuildCircle';
+import background from '../images/Amarillo.svg';
 import { getAllUsers } from '../../actions/user-action';
 
-export default function AdminCard() {
-  const [admin, setAdmin] = useState([]);
+export default function MechanicCard() {
+  const [mechanic, setMechanic] = useState([]);
 
   useEffect(() => {
     const allUsers = async () => {
       const response = await getAllUsers();
-      const adminData = response.data.filter((x) => x.rol.name === 'Admin');
-      setAdmin(adminData[0]);
+      const mechanicData = response.data.filter((x) => x.rol.name === 'Mechanic');
+      setMechanic(mechanicData[0]);
     };
     allUsers();
   }, []);
@@ -24,37 +24,33 @@ export default function AdminCard() {
   return (
     <Card sx={{ maxWidth: 345, backgroundImage: `url(${background})` }} style={{ margin: 'auto' }}>
       <CardHeader
-        style={{ color: '#ffffff', textAlign: 'center' }}
         avatar={(
           <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-            <ContactPhoneIcon />
+            <BuildCircleIcon />
           </Avatar>
         )}
-        title="Administrador Lubriservicios"
-
+        title="Mecanico Lubriservicios"
       />
 
       <CardContent>
-        <Typography variant="body2" color="white">
+        <Typography variant="body2">
           Nombre:
           {' '}
-          {admin?.name}
+          {mechanic?.name}
         </Typography>
-        <Typography variant="body2" color="white">
+        <Typography variant="body2">
           Telefono:
           {' '}
-          {admin?.cellPhone}
+          {mechanic?.cellPhone}
         </Typography>
-        <Typography variant="body2" color="white">
+        <Typography variant="body2">
           Correo:
           {' '}
-          {admin?.email}
+          {mechanic?.email}
         </Typography>
-
-        <Typography variant="caption" color="white">
+        <Typography variant="caption">
           Si necesita ayuda contactelo
         </Typography>
-
       </CardContent>
 
     </Card>

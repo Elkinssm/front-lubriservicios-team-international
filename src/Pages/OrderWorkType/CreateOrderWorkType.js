@@ -26,7 +26,6 @@ export default function CreateOrderWorkType() {
   const [orderWorks, setOrderWorks] = useState([]);
   const [works, setWorks] = useState([]);
   const { id } = useParams();
-  const [checked, setChecked] = useState([true, false]);
 
   const handleChangeWorkType = (event) => {
     setWorks(event.target.value);
@@ -49,12 +48,19 @@ export default function CreateOrderWorkType() {
       const response = await getAllWorkTypes();
       setWorkType(response.data);
     };
+    //   const workTypesData = response.data.map((workTypeData) => {
+    //     const isChecked = false;
+    //     return { ...workTypeData, isChecked };
+    //   });
+    //   setWorkType(workTypesData);
+    // };
     allWorkTypes();
   }, []);
 
   const history = useNavigate();
 
   const handleSubmit = (event) => {
+    debugger;
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const registertData = {
@@ -69,7 +75,7 @@ export default function CreateOrderWorkType() {
             'Orden tipo de trabajo creada correctamente',
             'success',
           );
-          history('/');
+          history('/dasboard/orders');
         } else if (response.status === 400 || response.code === 400) {
           Swal.fire(
             'Acceso',
@@ -88,6 +94,27 @@ export default function CreateOrderWorkType() {
       },
 
     );
+  };
+
+  const onChangeClause = (e, id) => {
+    e.preventDefault();
+    const { checked } = e.target;
+    if (works.length > 0) {
+      const previousWorks = [...works];
+      const index = previousWorks.findIndex((x) => x.id === id);
+      if (checked && index === -1) {
+        previousWorks.push(id);
+        setWorks(previousWorks);
+        return;
+      }
+
+      if (index !== -1) {
+        previousWorks.splice(index, 1);
+        setWorks(previousWorks);
+      }
+    } else {
+      setWorks([id]);
+    }
   };
 
   return (
@@ -117,26 +144,50 @@ export default function CreateOrderWorkType() {
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <FormControl fullWidth>
-                  <Typography>Tipo de trabajo</Typography>
-                  <FormControlLabel
-                    label="Tipo de trabajo"
-                    control={(
-                      <Checkbox
-                        checked={checked}
-                        onChange={handleChange}
-                        inputProps={{ 'aria-label': 'controlled' }}
+                  {/* {workType.map((work) => (
+                    <FormControlLabel
+                      label={work.name}
+                      name={`checkLabel${work.id}`}
+                      control={(
+                        <Checkbox
+                          defaultChecked={work.isChecked}
+                          checked={checked}
+                          onChange={handleChange}
+                          value={work.isChecked}
+                          name={`check${work.id}`}
+                          inputProps={{ 'aria-label': 'controlled' }}
+                        />
+                    )}
+                    />
+                  ))} */}
 
-                      />
-)}
-                  />
+                  {workType.map((modelo) => (
+                    <Grid container>
+                      <Grid
+                        item
+                        xs={2}
+                      >
+                        <Checkbox
+                          defaultChecked={modelo.isChecked}
+                          color="primary"
+                          name={`checkBox${modelo.id}`}
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                          checked={modelo.isChecked}
+                          onChange={(event) => onChangeClause(event, modelo.id)}
 
-                  {/* {workType.map((work) => <Checkbox value={work.id}>{work.name}</Checkbox>)} */}
+                        />
+                      </Grid>
+                      <Grid item xs={10}>
+                        <Typography key={modelo.id}>
+                          {modelo.name}
+                        </Typography>
+                        <Typography id="alert-dialog-description">
+                          {modelo.definitionClause}
+                        </Typography>
+                      </Grid>
+                    </Grid>
+                  ))}
 
-                </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <FormControl fullWidth>
-                  <InputLabel id="simple-select-label">Orden</InputLabel>
                 </FormControl>
               </Grid>
             </Grid>

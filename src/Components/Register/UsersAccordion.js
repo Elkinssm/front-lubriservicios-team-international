@@ -12,11 +12,15 @@ import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import * as IdKey from 'short-uuid';
 import { Link } from 'react-router-dom';
-import { deleteUsers, getAllUsers, updateUsers } from '../../actions/user-action';
+import { deleteUsers, getAllUsers } from '../../actions/user-action';
 import { headers } from './models';
+import DialogUser from './DialogUser';
 
 export default function UserAccordion() {
   const [users, setUsers] = useState([]);
+  const [openDialog, setOpenDialog] = useState(false);
+  const [userToUpdate, setUserToUpdate] = useState(null);
+  const [refresh, setRefresh] = useState(false);
   const id = IdKey.generate();
 
   useEffect(() => {
@@ -26,19 +30,16 @@ export default function UserAccordion() {
       setUsers(response.data);
     };
     allUsers();
-  }, []);
+  }, [refresh]);
 
-  const onEdit = () => {
-    const updateUserAsync = async () => {
-      const response = await updateUsers(id);
-      console.log(response.data);
-    };
-    updateUserAsync();
+  const onOpenDialog = (userId) => {
+    setUserToUpdate(userId);
+    setOpenDialog(true);
   };
 
-  const onDelete = (id) => {
+  const onDelete = (userId) => {
     const deleteUserAsync = async () => {
-      const response = await deleteUsers(id);
+      const response = await deleteUsers(userId);
       console.log(response.data);
     };
     deleteUserAsync();
@@ -66,6 +67,16 @@ export default function UserAccordion() {
   return (
 
     <>
+      {openDialog
+      && (
+      <DialogUser
+        setOpenDialog={setOpenDialog}
+        openDialog={openDialog}
+        userToUpdate={userToUpdate}
+        setRefresh={setRefresh}
+        refresh={refresh}
+      />
+      )}
       <Typography variant="h5">Listado de usuarios</Typography>
       <div style={{ textAlign: 'end' }}>
         <Link to="/register">
@@ -126,7 +137,7 @@ export default function UserAccordion() {
                     height: 20,
                     width: 20,
                   }}
-                  onClick={() => onEdit(user.id)}
+                  onClick={() => onOpenDialog(user.id)}
                 />
               </Tooltip>
               &nbsp;&nbsp;

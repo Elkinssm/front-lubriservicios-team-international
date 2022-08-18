@@ -13,7 +13,6 @@ import {
 } from 'chart.js';
 
 import { Line } from 'react-chartjs-2';
-import { Typography } from '@mui/material';
 import { getAllVehicles } from '../../actions/vehicle-action';
 
 ChartJS.register(
@@ -29,8 +28,6 @@ ChartJS.register(
 
 const scores = [3, 3, 2, 5, 8];
 // const marcas = ['Renault', 'Hino', 'Chevron', 'Test'];
-const scores2 = [1, 3, 2, 2, 4, 4, 5, 3, 2];
-// const labels = [100, 200, 300, 400, 500, 600, 700];
 
 const options = {
   fill: true,
@@ -63,9 +60,6 @@ export default function LineChart() {
     allVehicles();
   }, []);
 
-  const autos = vehicles;
-  const placas = autos.map((auto) => auto.brand);
-
   const data = useMemo(() => ({
     datasets: [
       {
@@ -77,14 +71,7 @@ export default function LineChart() {
         pointBackgroundColor: 'rgb(75,192,192)',
         backgroundColor: 'rgb(75,192,192,0.3)',
       },
-      // {
-      //   label: 'Mis datos (2)',
-      //   data: scores2,
-      //   tension: 0.3,
-      //   borderColor: 'green',
-      //   pointRadius: 6,
-      //   backgroundColor: 'rgb(0,255,0,0.3)',
-      // },
+
     ],
     labels: ['Renault', 'Hino', 'Chevron', 'Foton', 'Kenworth'],
     // labels,

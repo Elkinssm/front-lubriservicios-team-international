@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import { styled, useTheme, alpha } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -26,9 +26,8 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import HomeRepairServiceIcon from '@mui/icons-material/HomeRepairService';
 import HomeIcon from '@mui/icons-material/Home';
-
 import {
-  Avatar, Grid, Menu, Tooltip,
+  Avatar, Grid, Menu, MenuItem, Tooltip,
 } from '@mui/material';
 
 const drawerWidth = 240;
@@ -104,7 +103,7 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 export default function AppContainer() {
   const history = useNavigate();
   const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
 
   const goToHome = () => {
     history('/dashboard');
@@ -136,6 +135,19 @@ export default function AppContainer() {
 
   const handleDrawerClose = () => {
     setOpen(false);
+  };
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openSettings = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+    window.localStorage.removeItem(
+      'token_app',
+    );
+    history('/auth/login');
   };
 
   return (
@@ -175,24 +187,33 @@ export default function AppContainer() {
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
-              <IconButton onClick="" sx={{ p: 0 }}>
+              <IconButton
+                id="demo-positioned-button"
+                aria-controls={open ? 'demo-positioned-menu' : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? 'true' : undefined}
+                onClick={handleClick}
+              >
                 <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
             <Menu
-              sx={{ mt: '45px' }}
-              id="menu-appbar"
-            //   anchorEl={anchorElUser}
+              id="demo-positioned-menu"
+              aria-labelledby="demo-positioned-button"
+              anchorEl={anchorEl}
+              open={openSettings}
+              onClose={handleClose}
               anchorOrigin={{
                 vertical: 'top',
-                horizontal: 'right',
+                horizontal: 'left',
               }}
-              keepMounted
               transformOrigin={{
                 vertical: 'top',
-                horizontal: 'right',
+                horizontal: 'left',
               }}
-            />
+            >
+              <MenuItem onClick={handleClose}>Cerrar Sesion</MenuItem>
+            </Menu>
           </Box>
         </Toolbar>
       </AppBar>
@@ -208,17 +229,16 @@ export default function AppContainer() {
               boxSizing: 'border-box',
             },
           }}
-            // variant="persistent"
           anchor="left"
           open={open}
         >
-          <DrawerHeader style={{ backgroundColor: '#f5f70f' }}>
+          <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
             </IconButton>
           </DrawerHeader>
           <Divider />
-          <List style={{ backgroundColor: '#f5f70f' }}>
+          <List>
 
             <ListItem disablePadding>
               <ListItemButton onClick={() => goToHome('Inicio')}>
