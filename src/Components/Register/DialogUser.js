@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -60,7 +59,6 @@ export default function DialogUser({
   useEffect(() => {
     const getUserByIdAsync = async () => {
       const userData = await getUserById(userToUpdate);
-      debugger;
       setUserInfo(userData.data);
       setUserName(userData.data.name);
       setEmail(userData.data.email);

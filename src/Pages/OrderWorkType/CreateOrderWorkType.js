@@ -60,7 +60,6 @@ export default function CreateOrderWorkType() {
   const history = useNavigate();
 
   const handleSubmit = (event) => {
-    debugger;
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const registertData = {

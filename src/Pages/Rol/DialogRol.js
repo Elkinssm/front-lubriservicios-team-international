@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -32,7 +31,6 @@ export default function DialogRol({
   useEffect(() => {
     const getRolByIdAsync = async () => {
       const rolData = await getRolById(rolToUpdate);
-      debugger;
       setRolInfo(rolData.data);
       setNameRol(rolData.data.name);
       setDescription(rolData.data.description);

@@ -44,7 +44,6 @@ export default function DialogMaterial({
   useEffect(() => {
     const getMaterialByIdAsync = async () => {
       const materialData = await getMaterialById(materialToUpdate);
-      debugger;
       setMaterialInfo(materialData.data);
       setNameMaterial(materialData.data.name);
       setDescription(materialData.data.description);

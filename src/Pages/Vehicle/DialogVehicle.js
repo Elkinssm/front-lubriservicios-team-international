@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -64,7 +63,6 @@ export default function DialogVehicle({
   useEffect(() => {
     const getVehicleByIdAsync = async () => {
       const vehicleData = await getVehicleById(vehicleToUpdate);
-      debugger;
       setVehicleInfo(vehicleData.data);
       setPlate(vehicleData.data.plate);
       setBrand(vehicleData.data.brand);

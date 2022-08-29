@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -32,7 +31,6 @@ export default function DialogWorkType({
   useEffect(() => {
     const getworkTypeByIdAsync = async () => {
       const workTypeData = await getWorkTypesById(workTypeToUpdate);
-      debugger;
       setWorkTypeInfo(workTypeData.data);
       setNameWorkType(workTypeData.data.name);
       setDescription(workTypeData.data.description);

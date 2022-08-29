@@ -1,12 +1,12 @@
 import HttpClient from './HttpClient';
 
-export const registerVehicle = (patientData) => new Promise((resolve, reject) => {
+export const registerVehicle = (registerData) => new Promise((resolve, reject) => {
   const headers = {
     'Content-Type': 'application/json',
   };
   HttpClient.post(
     'http://localhost:3000/api/lubrisernorte/v1/vehicles/',
-    patientData,
+    registerData,
     headers,
   )
     .then((response) => {

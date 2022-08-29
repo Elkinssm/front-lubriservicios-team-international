@@ -1,4 +1,3 @@
-/* eslint-disable no-debugger */
 import React, { useEffect, useState } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -63,7 +62,6 @@ export default function DialogOrder({
   useEffect(() => {
     const getOrderByIdAsync = async () => {
       const orderData = await getOrderById(orderToUpdate);
-      debugger;
       setOrderInfo(orderData.data);
       setDateIn(orderData.data.dateIn);
       setDateOut(orderData.data.dateOut);
