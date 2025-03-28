@@ -22,10 +22,7 @@ export const getAllVehicles = () => new Promise((resolve, reject) => {
   const headers = {
     'Content-Type': 'application/json',
   };
-  HttpClient.get(
-    'http://localhost:3000/api/lubrisernorte/v1/vehicles/',
-    headers,
-  )
+  HttpClient.get('http://localhost:3000/api/lubrisernorte/v1/vehicles/', headers)
     .then((response) => {
       resolve(response);
     })

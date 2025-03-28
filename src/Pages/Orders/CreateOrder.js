@@ -17,6 +17,7 @@ import {
 import Swal from 'sweetalert2';
 import { getAllUsers } from '../../actions/user-action';
 import { registerOrder } from '../../actions/order-action';
+import { getAllVehicles } from '../../actions/vehicle-action';
 import { orderStatus } from './models';
 
 const theme = createTheme();
@@ -39,6 +40,14 @@ export default function CreateOrder() {
   const handleChangeVehicle = (event) => {
     setUserVehicle(event.target.value);
   };
+
+  useEffect(() => {
+    const allVehicles = async () => {
+      const response = await getAllVehicles();
+      setVehicles(response.data);
+    };
+    allVehicles();
+  }, []);
 
   useEffect(() => {
     const allUsers = async () => {
@@ -232,8 +241,7 @@ export default function CreateOrder() {
                     label="Vehiculo"
                     onChange={handleChangeVehicle}
                   >
-                    {vehicles
-                    && vehicles.map((car) => (
+                    {vehicles.map((car) => (
                       <MenuItem
                         value={car.id}
                       >
